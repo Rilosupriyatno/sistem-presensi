@@ -1,0 +1,15 @@
+CRITICAL - 2022-03-12 20:03:15 --> Cannot use isset() on the result of an expression (you can use "null !== expression" instead)
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2022-03-12 20:11:38 --> Undefined variable $validation
+#0 C:\xampp\htdocs\sistem-presensi\app\Views\admin\buatqr.php(15): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 15)
+#1 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('admin/buatqr', Array, true)
+#4 C:\xampp\htdocs\sistem-presensi\app\Controllers\Admin.php(499): view('admin/buatqr', Array)
+#5 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Admin->buatqr()
+#6 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#7 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\sistem-presensi\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
