@@ -2,7 +2,7 @@
 <?= $this->section('page-content'); ?>
 <div class="container-fluid">
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Mutasi Jabatan</h1>
+    <h1 class="h3 mb-4 text-gray-800">Status</h1>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-body">
@@ -19,9 +19,9 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>NIK</th>
+                            <th>NIP</th>
                             <th>Nama</th>
-                            <th>Jabatan</th>
+                            <th>Status</th>
                             <th>Mulai</th>
                             <th>Berakhir</th>
                             <th>Pembuat</th>
@@ -38,6 +38,8 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -45,15 +47,15 @@
                         <?php foreach ($logHistori as $histo) : ?>
                             <tr>
                                 <td><?= $i++; ?></td>
-                                <td><?= $histo['NIK']; ?></td>
+                                <td><?= $histo['NIP']; ?></td>
                                 <td><?= $histo['nama']; ?></td>
-                                <td><?= $histo['jabatan']; ?></td>
+                                <td><?= $histo['status']; ?></td>
                                 <td><?= $histo['tgl_mulai']; ?></td>
                                 <td><?= $histo['tgl_berakhir']; ?></td>
                                 <td><?= $histo['creator']; ?></td>
                                 <td><?= $histo['updator']; ?></td>
                                 <td>
-                                    <a href="/admin/editJabatan/<?= $histo['id']; ?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                                    <a href="/admin/editStatus/<?= $histo['id']; ?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                                     <a href="/admin/mutasi/<?= $histo['id']; ?>" class="btn btn-primary"><i class="fas fa-sync"></i></a>
                                 </td>
                             </tr>

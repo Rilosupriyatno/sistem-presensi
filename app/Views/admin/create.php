@@ -3,15 +3,15 @@
 <div class="container">
     <div class="row">
         <div class="col-8">
-            <h2 class="my-3">Tambah Data Karyawan</h2>
+            <h2 class="my-3">Tambah Data Staff</h2>
             <form action="/Admin/save" method="POST" enctype="multipart/form-data">
                 <?= csrf_field(); ?>
                 <div class="row mb-3">
-                    <label for="NIK" class="col-sm-2 col-form-label">NIK</label>
+                    <label for="NIP" class="col-sm-2 col-form-label">NIP</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control <?= ($validation->hasError('NIK')) ? 'is-invalid' : ''; ?>" id="NIK" name="NIK" autofocus value="<?= old('NIK'); ?>">
+                        <input type="text" class="form-control <?= ($validation->hasError('NIP')) ? 'is-invalid' : ''; ?>" id="NIP" name="NIP" autofocus value="<?= old('NIP'); ?>">
                         <div class="invalid-feedback">
-                            <?= $validation->getError('NIK'); ?>
+                            <?= $validation->getError('NIP'); ?>
                         </div>
                     </div>
                 </div>
@@ -34,15 +34,6 @@
                         </select>
                         <div class="invalid-feedback">
                             <?= $validation->getError('jenkel'); ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="tanggal" class="col-sm-2 col-form-label">Tanggal Lahir</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control datepicker <?= ($validation->hasError('tanggal')) ? 'is-invalid' : ''; ?>" id="tanggal" name="tanggal" placeholder="yyyy-mm-dd" autofocus value="<?= old('tanggal_lahir'); ?>">
-                        <div class="invalid-feedback">
-                            <?= $validation->getError('tanggal'); ?>
                         </div>
                     </div>
                 </div>
