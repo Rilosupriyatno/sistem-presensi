@@ -555,22 +555,17 @@ class Admin extends BaseController
     // Manage presensi
     public function buatqr()
     {
-        $nama = $this->request->getVar('nama');
-        $email = $this->request->getVar('email');
-        $url = "https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={$nama}{$email}";
-        if ($nama && $email != null) {
+        $ISN = $this->request->getVar('ISN');
+        $url = "https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={$ISN}";
+        if ($url != null) {
             $data = [
                 'title' => 'buatqr',
                 'url' => $url,
                 'validation' => \Config\Services::validation(),
-                'status' => $this->historiModel->findAll()
+                'dat_kelas' => $this->kelasModel->findAll(),
             ];
             return view('admin/buatqr', $data);
         }
-        $data = [
-            'title' => 'buatqr'
-        ];
-        return view('admin/buatqr', $data);
     }
     public function scanqr()
     {
@@ -578,5 +573,22 @@ class Admin extends BaseController
             'title' => 'scanqr'
         ];
         return view('admin/scanqr', $data);
+    }
+    public function savescan()
+    {
+
+        $this->presensiModel->save([
+            'ISN' => $this->request->getVar('ISN'),
+        ]);
+        session()->setFlashdata('pesan', 'Presensi Berhasil');
+        return redirect()->to('/admin/scanqr');
+    }
+    public function resultsiswa()
+    {
+        $data = [
+            'title' => 'resultsiswa'
+        ];
+
+        return view('admin/resultsiswa', $data);
     }
 }
