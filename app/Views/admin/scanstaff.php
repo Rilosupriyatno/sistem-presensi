@@ -5,7 +5,7 @@
         <div class="col-8  p-3 shadow-lg">
             <div class="card text-center">
                 <div class="card-header">
-                    Scan QrCode
+                    Scan QrCode 2
                 </div>
                 <?php if (session()->getFlashdata('pesan')) : ?>
                     <div class="alert alert-success" role="alert">
@@ -13,11 +13,11 @@
                     </div>
                 <?php endif; ?>
                 <div class="card-body">
-                    <form action="/Admin/savescan" method="POST">
-                        <input type="text" name="ISN" id="ISN" placeholder="ISN" hidden>
+                    <form action="/Admin/savescanstaff" method="POST">
+                        <input type="text" name="NIP" id="NIP" placeholder="NIP" hidden>
                     </form>
-                    <video class="card-img-top" id="preview" width="300" height="300"></video>
-                    <button onclick="scanner.stop()">Matikan Camera</button>
+                    <video class="card-img-top" id="preview2" width="300" height="300"></video>
+                    <button onclick="scanner2.stop()">Matikan Camera</button>
                     <button onclick="scan()">nyalakan Camera</button>
 
                 </div>

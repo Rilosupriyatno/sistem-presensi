@@ -7,13 +7,14 @@ use App\Models\HistoriModel;
 use App\Models\HaModel;
 use App\Models\AkunModel;
 use App\Models\StatusModel;
-use App\Models\PresensiModel;
+use App\Models\PsModel;
+use App\Models\PgModel;
 use App\Models\SiswaModel;
 use App\Models\KelasModel;
 
 class Admin extends BaseController
 {
-    protected $adminModel, $historiModel, $HaModel, $akunModel, $statusModel, $presensiModel, $siswaModel, $kelasModel;
+    protected $adminModel, $historiModel, $HaModel, $akunModel, $statusModel, $psModel, $siswaModel, $kelasModel, $pgModel;
     public function __construct()
     {
         $this->session = service('session');
@@ -24,9 +25,10 @@ class Admin extends BaseController
         $this->haModel = new HaModel();
         $this->akunModel = new AkunModel();
         $this->statusModel = new StatusModel();
-        $this->presensiModel = new PresensiModel();
+        $this->psModel = new PsModel();
         $this->siswaModel = new SiswaModel();
         $this->kelasModel = new KelasModel();
+        $this->pgModel = new PgModel();
     }
 
     public function index()
@@ -570,25 +572,71 @@ class Admin extends BaseController
     public function scanqr()
     {
         $data = [
-            'title' => 'scanqr'
+            'title' => 'scan siswa'
         ];
         return view('admin/scanqr', $data);
     }
     public function savescan()
     {
 
-        $this->presensiModel->save([
+        $this->psModel->save([
             'ISN' => $this->request->getVar('ISN'),
         ]);
         session()->setFlashdata('pesan', 'Presensi Berhasil');
         return redirect()->to('/admin/scanqr');
     }
-    public function resultsiswa()
+    public function scanstaff()
     {
         $data = [
-            'title' => 'resultsiswa'
+            'title' => 'scan staff'
         ];
+        return view('admin/scanstaff', $data);
+    }
+    public function savescanstaff()
+    {
 
-        return view('admin/resultsiswa', $data);
+        $this->pgModel->save([
+            'NIP' => $this->request->getVar('NIP'),
+        ]);
+        session()->setFlashdata('pesan', 'Presensi Berhasil');
+        return redirect()->to('/admin/scanstaff');
+    }
+    public function resultsiswa()
+    {
+        $currentPage = $this->request->getVar('page_result_siswa') ? $this->request->getVar('page_result_siswa') : 1;
+        $keyword = $this->request->getVar('keyword');
+        // if ($keyword) {
+        //     $data_staff = $this->siswaModel->search($keyword);
+        // } else {
+        //     $data_staff = $this->siswaModel;
+        // }
+        $data = [
+            'title' => 'resultsiswa',
+            'currentPage' => $currentPage
+        ];
+        $resultsiswa = $this->kelasModel->select('presensi_siswa.ISN,nama,jenis_kelamin,kelas,tanggal,waktu_datang,keterangan')->join('data_siswa', 'kelas.id_kelas = data_siswa.id_kelas')->join('presensi_siswa', 'data_siswa.ISN = presensi_siswa.ISN');
+        $data['resultsiswa'] = $resultsiswa->paginate(5, 'resultsiswa');
+        $data['pager'] = $this->psModel->pager;
+
+        return view('admin/result_siswa', $data);
+    }
+    public function resultstaff()
+    {
+        $currentPage = $this->request->getVar('page_result_staff') ? $this->request->getVar('page_result_staff') : 1;
+        $keyword = $this->request->getVar('keyword');
+        // if ($keyword) {
+        //     $data_staff = $this->siswaModel->search($keyword);
+        // } else {
+        //     $data_staff = $this->siswaModel;
+        // }
+        $data = [
+            'title' => 'resultstaff',
+            'currentPage' => $currentPage
+        ];
+        $resultstaff = $this->kelasModel->select('presensi_siswa.ISN,nama,jenis_kelamin,kelas,tanggal,waktu_datang,keterangan')->join('data_siswa', 'kelas.id_kelas = data_siswa.id_kelas')->join('presensi_siswa', 'data_siswa.ISN = presensi_siswa.ISN');
+        $data['resultstaff'] = $resultstaff->paginate(5, 'resultstaff');
+        $data['pager'] = $this->psModel->pager;
+
+        return view('admin/result_staff', $data);
     }
 }

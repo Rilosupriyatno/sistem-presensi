@@ -41,16 +41,30 @@
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="<?= base_url('admin'); ?>" data-toggle="collapse" data-target="#collapsePresensi" aria-expanded="true" aria-controls="collapseTwo">
+            <a class="nav-link collapsed" href="<?= base_url('admin'); ?>" data-toggle="collapse" data-target="#collapsePresensiSiswa" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
-                <span>Manage Presensi</span>
+                <span>Manage Siswa</span>
             </a>
-            <div id="collapsePresensi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div id="collapsePresensiSiswa" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Menu:</h6>
                     <a class="collapse-item" href="<?= base_url('admin/buatqr'); ?>">Buat QrCode</a>
                     <a class="collapse-item" href="<?= base_url('admin/scanqr'); ?>">Scan Presensi</a>
-                    <a class="collapse-item" href="<?= base_url('admin/result'); ?>">Rekap Presensi</a>
+                    <a class="collapse-item" href="<?= base_url('admin/resultsiswa'); ?>">Rekap Presensi Siswa</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="<?= base_url('admin'); ?>" data-toggle="collapse" data-target="#collapsePresensiStaff" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Manage Staff</span>
+            </a>
+            <div id="collapsePresensiStaff" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Menu:</h6>
+                    <a class="collapse-item" href="<?= base_url('admin/buatqr'); ?>">Buat QrCode</a>
+                    <a class="collapse-item" href="<?= base_url('admin/scanstaff'); ?>">Scan Presensi</a>
+                    <a class="collapse-item" href="<?= base_url('admin/resultstaff'); ?>">Rekap Presensi Staff</a>
                 </div>
             </div>
         </li>
