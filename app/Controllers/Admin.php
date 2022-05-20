@@ -557,8 +557,8 @@ class Admin extends BaseController
     // Manage presensi
     public function buatqr()
     {
-        $ISN = $this->request->getVar('ISN');
-        $url = "https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={$ISN}";
+        $NI = $this->request->getVar('NI');
+        $url = "https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={$NI}";
         if ($url != null) {
             $data = [
                 'title' => 'buatqr',
@@ -616,7 +616,7 @@ class Admin extends BaseController
         ];
         $resultsiswa = $this->kelasModel->select('presensi_siswa.ISN,nama,jenis_kelamin,kelas,tanggal,waktu_datang,keterangan')->join('data_siswa', 'kelas.id_kelas = data_siswa.id_kelas')->join('presensi_siswa', 'data_siswa.ISN = presensi_siswa.ISN');
         $data['resultsiswa'] = $resultsiswa->paginate(5, 'resultsiswa');
-        $data['pager'] = $this->psModel->pager;
+        $data['pager'] = $this->kelasModel->pager;
 
         return view('admin/result_siswa', $data);
     }
@@ -633,9 +633,9 @@ class Admin extends BaseController
             'title' => 'resultstaff',
             'currentPage' => $currentPage
         ];
-        $resultstaff = $this->kelasModel->select('presensi_siswa.ISN,nama,jenis_kelamin,kelas,tanggal,waktu_datang,keterangan')->join('data_siswa', 'kelas.id_kelas = data_siswa.id_kelas')->join('presensi_siswa', 'data_siswa.ISN = presensi_siswa.ISN');
+        $resultstaff = $this->statusModel->select('presensi_staff.NIP,data_staff.nama,status.status,tanggal,waktu_datang,waktu_pergi')->join('histori', 'status.id_status = histori.id_status')->join('data_staff', 'data_staff.NIP = histori.NIP')->join('presensi_staff', 'data_staff.NIP = presensi_staff.NIP');
         $data['resultstaff'] = $resultstaff->paginate(5, 'resultstaff');
-        $data['pager'] = $this->psModel->pager;
+        $data['pager'] = $this->statusModel->pager;
 
         return view('admin/result_staff', $data);
     }

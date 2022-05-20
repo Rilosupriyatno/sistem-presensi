@@ -61,7 +61,7 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <!-- <'?= $pager->links('resultsiswa', 'data_paginate') ?> -->
+                <?= $pager->links('resultsiswa', 'data_paginate') ?>
             </div>
         </div>
     </div>

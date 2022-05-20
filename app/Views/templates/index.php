@@ -27,7 +27,7 @@
 
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="setInterval('displayTime()', 1000);">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -128,6 +128,16 @@
             fileFoto.onload = function(e) {
                 imgPrev.src = e.target.result;
             }
+        }
+
+        function displayTime() {
+            var clientTime = new Date();
+            var time = new Date(clientTime.getTime());
+            var sh = time.getHours().toString();
+            var sm = time.getMinutes().toString();
+            var ss = time.getSeconds().toString();
+            document.getElementById("jam").innerHTML = (sh.length == 1 ? "0" + sh : sh) + ":" + (sm.length == 1 ? "0" + sm : sm) + ":" + (ss.length == 1 ? "0" + ss : ss);
+            document.getElementById("jaminput").value = (sh.length == 1 ? "0" + sh : sh) + ":" + (sm.length == 1 ? "0" + sm : sm) + ":" + (ss.length == 1 ? "0" + ss : ss);
         }
 
         function prevFile() {

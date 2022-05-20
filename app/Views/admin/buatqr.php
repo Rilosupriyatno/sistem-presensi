@@ -7,9 +7,9 @@
             <form action="/Admin/buatqr" method="POST" enctype="multipart/form-data">
                 <?= csrf_field(); ?>
                 <div class="row mb-3">
-                    <label for="ISN" class="col-sm-8 col-form-label">ISN</label>
+                    <label for="NI" class="col-sm-8 col-form-label">Nomor Identitas</label>
                     <div class="col-sm-5 input-group flex-nowrap">
-                        <input type="text" class="form-control" id="ISN" name="ISN" placeholder="ISN" autofocus>
+                        <input type="text" class="form-control" id="NI" name="NI" placeholder="Nomor Identitas" autofocus>
                     </div>
                 </div>
                 <?php if (!empty($url)) : ?>

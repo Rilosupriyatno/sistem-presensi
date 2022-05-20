@@ -21,13 +21,12 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>ISN</th>
+                            <th>NIP</th>
                             <th>Nama</th>
-                            <th>L/P</th>
-                            <th>Kelas</th>
+                            <th>Status</th>
                             <th>Tanggal</th>
                             <th>Waktu Datang</th>
-                            <th>Keterangan</th>
+                            <th>Waktu Pergi</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -44,16 +43,15 @@
                     </tfoot>
                     <tbody>
                         <?php $i = 1 + (5 * ($currentPage - 1)); ?>
-                        <?php foreach ($resultsiswa as $siswa) : ?>
+                        <?php foreach ($resultstaff as $staff) : ?>
                             <tr>
                                 <td><?= $i++; ?></td>
-                                <td><?= $siswa['ISN']; ?></td>
-                                <td><?= $siswa['nama']; ?></td>
-                                <td><?= $siswa['jenis_kelamin']; ?></td>
-                                <td><?= $siswa['kelas']; ?></td>
-                                <td><?= $siswa['tanggal']; ?></td>
-                                <td><?= $siswa['waktu_datang']; ?></td>
-                                <td><?= $siswa['keterangan']; ?></td>
+                                <td><?= $staff['NIP']; ?></td>
+                                <td><?= $staff['nama']; ?></td>
+                                <td><?= $staff['status']; ?></td>
+                                <td><?= $staff['tanggal']; ?></td>
+                                <td><?= $staff['waktu_datang']; ?></td>
+                                <td><?= $staff['waktu_pergi']; ?></td>
                                 <!-- <td>
                                     <a href="</?= base_url('admin/detail_siswa' . $siswa'['siswaid']); ?>" class="btn btn-info">Detail</a>
                                 </td> -->
@@ -61,7 +59,7 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <!-- <'?= $pager->links('resultsiswa', 'data_paginate') ?> -->
+                <?= $pager->links('resultstaff', 'data_paginate') ?>
             </div>
         </div>
     </div>
