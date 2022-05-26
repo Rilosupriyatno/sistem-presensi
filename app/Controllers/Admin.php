@@ -6,7 +6,7 @@ use App\Models\AdminModel;
 use App\Models\HistoriModel;
 use App\Models\HaModel;
 use App\Models\AkunModel;
-use App\Models\StatusModel;
+use App\Models\posisiModel;
 use App\Models\PsModel;
 use App\Models\PgModel;
 use App\Models\SiswaModel;
@@ -14,7 +14,7 @@ use App\Models\KelasModel;
 
 class Admin extends BaseController
 {
-    protected $adminModel, $historiModel, $HaModel, $akunModel, $statusModel, $psModel, $siswaModel, $kelasModel, $pgModel;
+    protected $adminModel, $historiModel, $HaModel, $akunModel, $posisiModel, $psModel, $siswaModel, $kelasModel, $pgModel;
     public function __construct()
     {
         $this->session = service('session');
@@ -24,7 +24,7 @@ class Admin extends BaseController
         $this->historiModel = new HistoriModel();
         $this->haModel = new HaModel();
         $this->akunModel = new AkunModel();
-        $this->statusModel = new StatusModel();
+        $this->posisiModel = new posisiModel();
         $this->psModel = new PsModel();
         $this->siswaModel = new SiswaModel();
         $this->kelasModel = new KelasModel();
@@ -47,7 +47,7 @@ class Admin extends BaseController
         $data = [
             'title' => 'Tambah Data',
             'validation' => \Config\Services::validation(),
-            'status' => $this->historiModel->findAll()
+            'posisi' => $this->historiModel->findAll()
         ];
         return view('admin/create', $data);
     }
@@ -235,9 +235,9 @@ class Admin extends BaseController
     public function mutasi($id)
     {
         $data = [
-            'title' => 'Status',
+            'title' => 'posisi',
             'validation' => \Config\Services::validation(),
-            'status' => $this->statusModel->findAll(4),
+            'posisi' => $this->posisiModel->findAll(4),
             'NIP' => $this->adminModel->findAll(),
             'stat' => $this->historiModel->where('id', $id)->first()
 
@@ -255,7 +255,7 @@ class Admin extends BaseController
         $this->historiModel->save([
             'id' => $id,
             'NIP' => $this->request->getVar('NIP'),
-            'id_status' => $this->request->getVar('id_status'),
+            'id_posisi' => $this->request->getVar('id_posisi'),
             // 'no_sk' => $this->request->getVar('no_sk'),
             // 'sk' => $namaFile,
             'tgl_mulai' => $this->request->getVar('tgl_mulai'),
@@ -269,15 +269,15 @@ class Admin extends BaseController
             ];
             $this->historiModel->update($id, $data);
         }
-        session()->setFlashdata('pesan', 'Status Berhasil di Ubah');
+        session()->setFlashdata('pesan', 'posisi Berhasil di Ubah');
         return redirect()->to('/admin/daftar_staff');
     }
-    public function editStatus($id)
+    public function editposisi($id)
     {
         $data = [
-            'title' => 'Edit Status',
+            'title' => 'Edit posisi',
             'validation' => \Config\Services::validation(),
-            'status' => $this->historiModel->where('id', $id)->first()
+            'posisi' => $this->historiModel->where('id', $id)->first()
         ];
         return view('admin/edit_histori', $data);
     }
@@ -286,14 +286,14 @@ class Admin extends BaseController
         $this->historiModel->save([
             'id' => $id,
             'NIP' => $this->request->getVar('NIP'),
-            'id_status' => $this->request->getVar('id_status'),
+            'id_posisi' => $this->request->getVar('id_posisi'),
             'tgl_berakhir' => $this->request->getVar('tgl_berakhir'),
             'updator' => $this->request->getVar('updator'),
         ]);
         $del = $this->historiModel->find($id);
         if ($del['tgl_berakhir'] != null) {
             $data = [
-                'id_status' => 8
+                'id_posisi' => 8
             ];
             $this->historiModel->update($id, $data);
         }
@@ -330,7 +330,7 @@ class Admin extends BaseController
             'title' => 'Daftar staff',
             'currentPage' => $currentPage
         ];
-        $datastaff = $this->adminModel->select('data_staff.id staffid, foto, data_staff.nama, data_staff.NIP, histori.id_status, status')->join('histori', 'data_staff.NIP = histori.NIP', 'left')->join('status', 'status.id_status = histori.id_status', 'left');
+        $datastaff = $this->adminModel->select('data_staff.id staffid, foto, data_staff.nama, data_staff.NIP, histori.id_posisi, posisi')->join('histori', 'data_staff.NIP = histori.NIP', 'left')->join('posisi', 'posisi.id_posisi = histori.id_posisi', 'left');
         $data['data_staff'] = $datastaff->paginate(5, 'data_staff');
         $data['pager'] = $this->adminModel->pager;
         return view('admin/daftar_staff', $data);
@@ -357,18 +357,18 @@ class Admin extends BaseController
     public function detail($id = 0)
     {
         $data['title'] = 'User Detail';
-        // $this->adminModel->select('data_siswa.id_usr as staffid, NIP, foto, nama, tangla, templa, alamat, id_status, pendikte, name');
+        // $this->adminModel->select('data_siswa.id_usr as staffid, NIP, foto, nama, tangla, templa, alamat, id_posisi, pendikte, name');
         // $this->adminModel->join('users', 'users.id = staff.id');
         // $this->adminModel->join('auth_groups_users', 'auth_groups_users.user_id = data_staff.id_usr');
         // $this->adminModel->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id');
         // $this->adminModel->where('data_staff.id_usr', $id);
         // $query = $this->adminModel->get();
-        $this->adminModel->select('data_staff.id staffid, foto, data_staff.nama, data_staff.NIP, jenkel, status, histori.id_status');
+        $this->adminModel->select('data_staff.id staffid, foto, data_staff.nama, data_staff.NIP, jenkel, posisi, histori.id_posisi');
         $this->adminModel->join('histori', 'data_staff.NIP = histori.NIP');
-        $this->adminModel->join('status', 'status.id_status = histori.id_status');
+        $this->adminModel->join('posisi', 'posisi.id_posisi = histori.id_posisi');
         $this->adminModel->where('data_staff.id', $id);
-        // $this->adminModel->select('data_staff.id staffid, NIP, foto, nama, data_staff.id_status, status');
-        // $this->adminModel->join('status', 'status.id_status = data_staff.id_status');
+        // $this->adminModel->select('data_staff.id staffid, NIP, foto, nama, data_staff.id_posisi, posisi');
+        // $this->adminModel->join('posisi', 'posisi.id_posisi = data_staff.id_posisi');
         // $this->adminModel->where('data_staff.id', $id);
         $query = $this->adminModel->get();
         $data['data_staff'] = $query->getRow();
@@ -402,10 +402,10 @@ class Admin extends BaseController
             $data_staff = $this->historiModel;
         }
         $data = [
-            'title' => 'Status',
+            'title' => 'posisi',
             'currentPage' => $currentPage
         ];
-        $logHistori = $this->historiModel->select('histori.id,histori.NIP,nama, histori.id_status, status, tgl_mulai, tgl_berakhir, histori.creator, histori.updator')->join('data_staff', 'data_staff.NIP = histori.NIP')->join('status', 'status.id_status = histori.id_status');
+        $logHistori = $this->historiModel->select('histori.id,histori.NIP,nama, histori.id_posisi, posisi, tgl_mulai, tgl_berakhir, histori.creator, histori.updator')->join('data_staff', 'data_staff.NIP = histori.NIP')->join('posisi', 'posisi.id_posisi = histori.id_posisi');
         $data['logHistori'] = $logHistori->paginate(5, 'histori');
         $data['pager'] = $this->historiModel->pager;
         return view('admin/mutasi_pegawai', $data);
@@ -450,8 +450,8 @@ class Admin extends BaseController
         // $this->akunModel->join('auth_groups_users', 'auth_groups_users.user_id = users.id');
         // $this->akunModel->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id');
         // $datastaff = $this->akunModel->findAll();
-        // $this->akunModel->select('data_staff.id staffid, foto, nama, data_staff.id_status, status');
-        // $this->akunModel->join('status', 'data_staff.id_status = status.id_status');
+        // $this->akunModel->select('data_staff.id staffid, foto, nama, data_staff.id_posisi, posisi');
+        // $this->akunModel->join('posisi', 'data_staff.id_posisi = posisi.id_posisi');
         // $query = $this->akunModel->get();
         // $data['data_staff'] = $query->getResult();
         $data['data_akun'] = $this->akunModel->paginate(5, 'users');
@@ -482,8 +482,8 @@ class Admin extends BaseController
             'title' => 'Trash',
             'currentPage' => $currentPage
         ];
-        // $datastaff = $this->adminModel->select('data_staff.id staffid, foto, nama, data_staff.id_status, status')->join('status', 'data_staff.id_status = status.id_status');
-        $datastaff = $this->adminModel->select('data_staff.id, foto, data_staff.nama, data_staff.NIP, histori.id_status, status')->join('histori', 'data_staff.NIP = histori.NIP')->join('status', 'status.id_status = histori.id_status')->onlyDeleted();
+        // $datastaff = $this->adminModel->select('data_staff.id staffid, foto, nama, data_staff.id_posisi, posisi')->join('posisi', 'data_staff.id_posisi = posisi.id_posisi');
+        $datastaff = $this->adminModel->select('data_staff.id, foto, data_staff.nama, data_staff.NIP, histori.id_posisi, posisi')->join('histori', 'data_staff.NIP = histori.NIP')->join('posisi', 'posisi.id_posisi = histori.id_posisi')->onlyDeleted();
 
         $data['data_staff'] = $datastaff->paginate(5, 'data_staff');
         $data['pager'] = $this->adminModel->pager;
@@ -633,9 +633,9 @@ class Admin extends BaseController
             'title' => 'resultstaff',
             'currentPage' => $currentPage
         ];
-        $resultstaff = $this->statusModel->select('presensi_staff.NIP,data_staff.nama,status.status,tanggal,waktu_datang,waktu_pergi')->join('histori', 'status.id_status = histori.id_status')->join('data_staff', 'data_staff.NIP = histori.NIP')->join('presensi_staff', 'data_staff.NIP = presensi_staff.NIP');
+        $resultstaff = $this->posisiModel->select('presensi_staff.NIP,data_staff.nama,posisi.posisi,tanggal,waktu_datang')->join('histori', 'posisi.id_posisi = histori.id_posisi')->join('data_staff', 'data_staff.NIP = histori.NIP')->join('presensi_staff', 'data_staff.NIP = presensi_staff.NIP');
         $data['resultstaff'] = $resultstaff->paginate(5, 'resultstaff');
-        $data['pager'] = $this->statusModel->pager;
+        $data['pager'] = $this->posisiModel->pager;
 
         return view('admin/result_staff', $data);
     }

@@ -29,7 +29,7 @@
                             <th>No</th>
                             <th>Foto</th>
                             <th>Nama</th>
-                            <th>Status</th>
+                            <th>Posisi</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -49,7 +49,7 @@
                                 <td><?= $i++; ?></td>
                                 <td><img src="/img/<?= $user['foto']; ?>" alt="" class="foto"></td>
                                 <td><?= $user['nama']; ?></td>
-                                <td><?= $user['status']; ?></td>
+                                <td><?= $user['posisi']; ?></td>
                                 <td>
                                     <a href="<?= base_url('/admin/restore/' . $user['id']) ?>" class="btn btn-info">Restore</a>
                                     <form action="<?= base_url('/admin/delete2/' . $user['id']) ?>" method="post" class="d-inline" onclick="return confirm('Yakin mau menghapus?');">

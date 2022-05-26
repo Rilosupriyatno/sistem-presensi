@@ -21,7 +21,7 @@
                                 </li>
                                 <li class="list-group-item"><?= $data_staff->NIP; ?></li>
                                 <li class="list-group-item"><?= $data_staff->jenkel; ?></li>
-                                <li class="list-group-item"><?= $data_staff->status; ?></li>
+                                <li class="list-group-item"><?= $data_staff->posisi; ?></li>
                                 <li class="list-group-item"></li>
                             </ul>
                             <a href="/admin/edit/<?= $data_staff->staffid; ?>" class="btn btn-warning">Edit</a>

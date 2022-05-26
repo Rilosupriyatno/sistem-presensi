@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-8">
-            <h2 class="my-3">Status</h2>
+            <h2 class="my-3">Posisi</h2>
             <form action="/Admin/mutate/<?= $stat['id']; ?>" method="POST" enctype="multipart/form-data">
                 <?= csrf_field(); ?>
                 <div class="row mb-3">
@@ -16,16 +16,16 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="id_status" class="col-sm-2 col-form-label">Status</label>
+                    <label for="id_posisi" class="col-sm-2 col-form-label">Posisi</label>
                     <div class="col-sm-10">
-                        <select class="form-select form-control <?= ($validation->hasError('id_status')) ? 'is-invalid' : ''; ?>" aria-label="Default select example" id="id_status" name="id_status" autofocus value="<?= old('id_status'); ?>">
-                            <option selected>Pilih Status</option>
-                            <?php foreach ($status as $jb) : ?>
-                                <option value="<?= $jb['id_status']; ?>"><?= $jb['status']; ?></option>
+                        <select class="form-select form-control <?= ($validation->hasError('id_posisi')) ? 'is-invalid' : ''; ?>" aria-label="Default select example" id="id_posisi" name="id_posisi" autofocus value="<?= old('id_posisi'); ?>">
+                            <option selected>Pilih posisi</option>
+                            <?php foreach ($posisi as $jb) : ?>
+                                <option value="<?= $jb['id_posisi']; ?>"><?= $jb['posisi']; ?></option>
                             <?php endforeach;  ?>
                         </select>
                         <div class="invalid-feedback">
-                            <?= $validation->getError('id_status'); ?>
+                            <?= $validation->getError('id_posisi'); ?>
                         </div>
                     </div>
                 </div>

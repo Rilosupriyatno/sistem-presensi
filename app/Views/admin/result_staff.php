@@ -23,15 +23,13 @@
                             <th>No</th>
                             <th>NIP</th>
                             <th>Nama</th>
-                            <th>Status</th>
+                            <th>Posisi</th>
                             <th>Tanggal</th>
                             <th>Waktu Datang</th>
-                            <th>Waktu Pergi</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -48,10 +46,9 @@
                                 <td><?= $i++; ?></td>
                                 <td><?= $staff['NIP']; ?></td>
                                 <td><?= $staff['nama']; ?></td>
-                                <td><?= $staff['status']; ?></td>
+                                <td><?= $staff['posisi']; ?></td>
                                 <td><?= $staff['tanggal']; ?></td>
                                 <td><?= $staff['waktu_datang']; ?></td>
-                                <td><?= $staff['waktu_pergi']; ?></td>
                                 <!-- <td>
                                     <a href="</?= base_url('admin/detail_siswa' . $siswa'['siswaid']); ?>" class="btn btn-info">Detail</a>
                                 </td> -->

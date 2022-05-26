@@ -2,7 +2,7 @@
 <?= $this->section('page-content'); ?>
 <div class="container-fluid">
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Status</h1>
+    <h1 class="h3 mb-4 text-gray-800">Posisi</h1>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-body">
@@ -21,7 +21,7 @@
                             <th>No</th>
                             <th>NIP</th>
                             <th>Nama</th>
-                            <th>Status</th>
+                            <th>Posisi</th>
                             <th>Mulai</th>
                             <th>Berakhir</th>
                             <th>Pembuat</th>
@@ -49,13 +49,13 @@
                                 <td><?= $i++; ?></td>
                                 <td><?= $histo['NIP']; ?></td>
                                 <td><?= $histo['nama']; ?></td>
-                                <td><?= $histo['status']; ?></td>
+                                <td><?= $histo['posisi']; ?></td>
                                 <td><?= $histo['tgl_mulai']; ?></td>
                                 <td><?= $histo['tgl_berakhir']; ?></td>
                                 <td><?= $histo['creator']; ?></td>
                                 <td><?= $histo['updator']; ?></td>
                                 <td>
-                                    <a href="/admin/editStatus/<?= $histo['id']; ?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                                    <a href="/admin/editposisi/<?= $histo['id']; ?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                                     <a href="/admin/mutasi/<?= $histo['id']; ?>" class="btn btn-primary"><i class="fas fa-sync"></i></a>
                                 </td>
                             </tr>

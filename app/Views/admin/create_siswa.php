@@ -41,7 +41,7 @@
                     <label for="id_kelas" class="col-sm-2 col-form-label">Kelas</label>
                     <div class="col-sm-10">
                         <select type="text" class="form-control <?= ($validation->hasError('id_kelas')) ? 'is-invalid' : ''; ?>" id="id_kelas" name="id_kelas" autofocus value="<?= old('id_kelas'); ?>">
-                            <option selected>Pilih Status</option>
+                            <option selected>Pilih Kelas</option>
                             <?php foreach ($kelas as $kls) : ?>
                                 <option value="<?= $kls['id_kelas']; ?>"><?= $kls['kelas']; ?></option>
                             <?php endforeach;  ?>

@@ -30,7 +30,7 @@
                             <th>No</th>
                             <th>Foto</th>
                             <th>Nama</th>
-                            <th>Status</th>
+                            <th>Posisi</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -50,7 +50,7 @@
                                 <td><?= $i++; ?></td>
                                 <td><img src="/img/<?= $user['foto']; ?>" alt="" class="foto"></td>
                                 <td><?= $user['nama']; ?></td>
-                                <td><?= $user['status']; ?></td>
+                                <td><?= $user['posisi']; ?></td>
                                 <td>
                                     <a href="<?= base_url('admin/' . $user['staffid']); ?>" class="btn btn-info">Detail</a>
                                 </td>
