@@ -1,10 +1,18 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('admin'); ?>">
-        <i class="fas fa-briefcase"></i>
-        <div class="sidebar-brand-text mx-3">SMAN 1 WALED</div>
-    </a>
+    <?php if (in_groups('admin')) : ?>
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('admin'); ?>">
+            <i class="fas fa-briefcase"></i>
+            <div class="sidebar-brand-text mx-3">SMAN 1 WALED</div>
+        </a>
+    <?php endif; ?>
+    <?php if (in_groups('user') & !in_groups('admin')) : ?>
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('user/index/' . user_id()); ?>">
+            <i class="fas fa-briefcase"></i>
+            <div class="sidebar-brand-text mx-3">SMAN 1 WALED</div>
+        </a>
+    <?php endif; ?>
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">

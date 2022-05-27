@@ -1,0 +1,38 @@
+CRITICAL - 2022-05-27 01:06:10 --> You do not have sufficient permissions to access that page.
+#0 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Filters\Filters.php(169): Myth\Auth\Filters\RoleFilter->before(Object(CodeIgniter\HTTP\IncomingRequest), Array)
+#1 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(374): CodeIgniter\Filters\Filters->run('admin', 'before')
+#2 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\sistem-presensi\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-05-27 01:09:24 --> Too few arguments to function App\Controllers\User::index(), 0 passed in C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php on line 802 and exactly 1 expected
+#0 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\User->index()
+#1 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+#2 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\sistem-presensi\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-05-27 02:25:59 --> Call to undefined method App\Models\SiswaModel::search
+#0 C:\xampp\htdocs\sistem-presensi\app\Controllers\Admin.php(343): CodeIgniter\Model->__call('search', Array)
+#1 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Admin->daftar_siswa()
+#2 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#3 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\xampp\htdocs\sistem-presensi\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#6 {main}
+CRITICAL - 2022-05-27 02:26:10 --> Call to undefined method App\Models\SiswaModel::search
+#0 C:\xampp\htdocs\sistem-presensi\app\Controllers\Admin.php(343): CodeIgniter\Model->__call('search', Array)
+#1 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Admin->daftar_siswa()
+#2 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#3 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\xampp\htdocs\sistem-presensi\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#6 {main}
+CRITICAL - 2022-05-27 02:35:47 --> Call to undefined method App\Models\SiswaModel::search
+#0 C:\xampp\htdocs\sistem-presensi\app\Controllers\Admin.php(343): CodeIgniter\Model->__call('search', Array)
+#1 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Admin->daftar_siswa()
+#2 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#3 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\xampp\htdocs\sistem-presensi\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#6 {main}

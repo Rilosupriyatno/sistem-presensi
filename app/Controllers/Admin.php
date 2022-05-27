@@ -6,7 +6,7 @@ use App\Models\AdminModel;
 use App\Models\HistoriModel;
 use App\Models\HaModel;
 use App\Models\AkunModel;
-use App\Models\posisiModel;
+use App\Models\PosisiModel;
 use App\Models\PsModel;
 use App\Models\PgModel;
 use App\Models\SiswaModel;
@@ -322,9 +322,9 @@ class Admin extends BaseController
         $currentPage = $this->request->getVar('page_data_staff') ? $this->request->getVar('page_data_staff') : 1;
         $keyword = $this->request->getVar('keyword');
         if ($keyword) {
-            $data_staff = $this->adminModel->search($keyword);
+            $datastaff = $this->adminModel->search($keyword);
         } else {
-            $data_staff = $this->adminModel;
+            $datastaff = $this->adminModel;
         }
         $data = [
             'title' => 'Daftar staff',
@@ -340,9 +340,9 @@ class Admin extends BaseController
         $currentPage = $this->request->getVar('page_data_siswa') ? $this->request->getVar('page_data_siswa') : 1;
         $keyword = $this->request->getVar('keyword');
         if ($keyword) {
-            $data_siswa = $this->siswaModel->search($keyword);
+            $datasiswa = $this->siswaModel->search($keyword);
         } else {
-            $data_siswa = $this->siswaModel;
+            $datasiswa = $this->siswaModel;
         }
         $data = [
             'title' => 'Daftar Siswa',
