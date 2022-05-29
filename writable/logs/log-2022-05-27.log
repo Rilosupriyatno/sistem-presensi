@@ -36,3 +36,39 @@ CRITICAL - 2022-05-27 02:35:47 --> Call to undefined method App\Models\SiswaMode
 #4 C:\xampp\htdocs\sistem-presensi\public\index.php(37): CodeIgniter\CodeIgniter->run()
 #5 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
 #6 {main}
+CRITICAL - 2022-05-27 07:35:53 --> Undefined variable: currentPage
+#0 C:\xampp\htdocs\sistem-presensi\app\Views\admin\export.php(47): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\xampp\\htdocs...', 47, Array)
+#1 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('admin/export', Array, true)
+#4 C:\xampp\htdocs\sistem-presensi\app\Controllers\Admin.php(647): view('admin/export', Array)
+#5 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Admin->export()
+#6 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#7 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\sistem-presensi\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2022-05-27 07:38:01 --> Undefined variable: resultsiswa
+#0 C:\xampp\htdocs\sistem-presensi\app\Views\admin\export.php(48): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\xampp\\htdocs...', 48, Array)
+#1 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('admin/export', Array, true)
+#4 C:\xampp\htdocs\sistem-presensi\app\Controllers\Admin.php(659): view('admin/export', Array)
+#5 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Admin->export()
+#6 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#7 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\sistem-presensi\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2022-05-27 07:39:58 --> Undefined variable: resultstaff
+#0 C:\xampp\htdocs\sistem-presensi\app\Views\admin\export.php(45): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\xampp\\htdocs...', 45, Array)
+#1 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('admin/export', Array, true)
+#4 C:\xampp\htdocs\sistem-presensi\app\Controllers\Admin.php(659): view('admin/export', Array)
+#5 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Admin->export()
+#6 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#7 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\sistem-presensi\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}

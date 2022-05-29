@@ -9,7 +9,10 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table" id="table_id" width="100%" cellspacing="0">
+                <div class="card-header-action" style="float: right;">
+                    <a href="/admin/exportsiswa" class="btn btn-success"> Export</a>
+                </div>
+                <table class="table" id="dataTable" width="100%" cellspacing="0">
                     <div class="col-6">
                         <form action="" method="post">
                             <div class="input-group mb-3">

@@ -9,6 +9,9 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
+                <div class="card-header-action" style="float: right;">
+                    <a href="/admin/export" class="btn btn-success"> Export</a>
+                </div>
                 <table class="table" id="table_id" width="100%" cellspacing="0">
                     <div class="col-6">
                         <form action="" method="post">

@@ -42,7 +42,6 @@
                     <h6 class="collapse-header">Menu:</h6>
                     <a class="collapse-item" href="<?= base_url('admin/daftar_staff'); ?>">Daftar Staff</a>
                     <a class="collapse-item" href="<?= base_url('admin/daftar_siswa'); ?>">Daftar Siswa</a>
-                    <a class="collapse-item" href="<?= base_url('admin/buatqr'); ?>">Buat QrCode</a>
                     <a class="collapse-item" href="<?= base_url('admin/mutasi_pegawai'); ?>">Posisi</a>
                     <a class="collapse-item" href="<?= base_url('admin/daftar_akun'); ?>">Daftar Akun</a>
                     <a class="collapse-item" href="<?= base_url('admin/histori_akun'); ?>">Histori Akun</a>
@@ -83,6 +82,12 @@
             <i class="fas fa-fw fa-user"></i>
             <span>My Profile</span>
             <!-- <i class="fa fa-user" aria-hidden="true"></i> -->
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="<?= base_url('admin/buatqr'); ?>">
+            <i class="fas fa-fw fa-qrcode" aria-hidden="true"></i>
+            <span>Buat QrCode</span>
         </a>
     </li>
     <!-- Nav Item - Utilities Collapse Menu -->

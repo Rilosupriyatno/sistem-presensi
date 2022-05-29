@@ -639,4 +639,42 @@ class Admin extends BaseController
 
         return view('admin/result_staff', $data);
     }
+    public function export()
+    {
+        $currentPage = $this->request->getVar('page_result_staff') ? $this->request->getVar('page_result_staff') : 1;
+        $keyword = $this->request->getVar('keyword');
+        // if ($keyword) {
+        //     $data_staff = $this->siswaModel->search($keyword);
+        // } else {
+        //     $data_staff = $this->siswaModel;
+        // }
+        $data = [
+            'title' => 'Export Staff',
+            'currentPage' => $currentPage
+        ];
+        $resultstaff = $this->posisiModel->select('presensi_staff.NIP,data_staff.nama,posisi.posisi,tanggal,waktu_datang')->join('histori', 'posisi.id_posisi = histori.id_posisi')->join('data_staff', 'data_staff.NIP = histori.NIP')->join('presensi_staff', 'data_staff.NIP = presensi_staff.NIP');
+        $data['resultstaff'] = $resultstaff->paginate(5, 'resultstaff');
+        $data['pager'] = $this->posisiModel->pager;
+
+        return view('admin/export', $data);
+    }
+    public function exportsiswa()
+    {
+        $currentPage = $this->request->getVar('page_result_siswa') ? $this->request->getVar('page_result_siswa') : 1;
+        $keyword = $this->request->getVar('keyword');
+        // if ($keyword) {
+        //     $data_staff = $this->siswaModel->search($keyword);
+        // } else {
+        //     $data_staff = $this->siswaModel;
+        // }
+        $data = [
+            'title' => 'resultsiswa',
+            'currentPage' => $currentPage
+        ];
+        $resultsiswa = $this->kelasModel->select('presensi_siswa.ISN,nama,jenis_kelamin,kelas,tanggal,waktu_datang,keterangan')->join('data_siswa', 'kelas.id_kelas = data_siswa.id_kelas')->join('presensi_siswa', 'data_siswa.ISN = presensi_siswa.ISN');
+        $data['resultsiswa'] = $resultsiswa->paginate(5, 'resultsiswa');
+        $data['pager'] = $this->kelasModel->pager;
+
+        return view('admin/exportsiswa', $data);
+    }
 }
