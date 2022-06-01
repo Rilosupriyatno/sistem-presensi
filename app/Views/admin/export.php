@@ -45,7 +45,7 @@
         <section class="section">
             <div class="mt-5">
                 <div class="container">
-                    <h4>Export Hasil Validasi..?</h4>
+                    <h4>Export Hasil Presensi</h4>
                     <div class="row">
                         <div class="col">
                             <table class="table table-striped table-bordered" id="example" style="width: 100%">

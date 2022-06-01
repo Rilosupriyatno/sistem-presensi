@@ -85,11 +85,19 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link collapsed" href="<?= base_url('admin/buatqr'); ?>">
+        <a class="nav-link collapsed" href="<?= base_url('admin/buatqr/' . user_id()); ?>">
             <i class="fas fa-fw fa-qrcode" aria-hidden="true"></i>
-            <span>Buat QrCode</span>
+            <span>QrCode</span>
         </a>
     </li>
+    <?php if (in_groups('user') & !in_groups('admin')) : ?>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="<?= base_url('admin/riwayat/' . user_id()); ?>">
+                <i class="fas fa-fw fa-book" aria-hidden="true"></i>
+                <span>Lihat Riwayat</span>
+            </a>
+        </li>
+    <?php endif; ?>
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="<?= base_url('user/edit/' . user_id()); ?>">

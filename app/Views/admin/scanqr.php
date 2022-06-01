@@ -16,8 +16,8 @@
                     <form action="/Admin/savescan" method="POST">
                         <input type="text" name="ISN" id="ISN" placeholder="ISN" hidden>
                     </form>
-                    <video class="card-img-top" id="preview" width="300" height="300"></video>
-                    <button onclick="scanner.stop()">Matikan Camera</button>
+                    <video class="card-img-top" id="preview" width="300" height="300" onload="scan()"></video>
+                    <!-- <button onclick="scanner.stop()">Matikan Camera</button> -->
                     <button onclick="scan()">nyalakan Camera</button>
 
                 </div>

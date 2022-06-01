@@ -3,6 +3,7 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <!-- <a href="/admin/create_siswa" class="btn btn-primary mt-3" style="float: right;">Tambah Siswa</a> -->
+    <a href="/admin/pres_sis" class="btn btn-primary mt-3" style="float: right;">Sakit/Izin</a>
     <h1 class="h3 mb-4 text-gray-800">Presensi Siswa</h1>
 
     <!-- DataTales Example -->
@@ -31,6 +32,7 @@
                             <th>Tanggal</th>
                             <th>Waktu Datang</th>
                             <th>Keterangan</th>
+                            <!-- <th>Action</th> -->
                         </tr>
                     </thead>
                     <tfoot>
@@ -43,6 +45,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <!-- <th></th> -->
                         </tr>
                     </tfoot>
                     <tbody>
@@ -58,7 +61,7 @@
                                 <td><?= $siswa['waktu_datang']; ?></td>
                                 <td><?= $siswa['keterangan']; ?></td>
                                 <!-- <td>
-                                    <a href="</?= base_url('admin/detail_siswa' . $siswa'['siswaid']); ?>" class="btn btn-info">Detail</a>
+                                    <a href="</?= base_url('admin/detail_siswa' . $siswa/['siswaid']); ?>" class="btn btn-info">Detail</a>
                                 </td> -->
                             </tr>
                         <?php endforeach; ?>

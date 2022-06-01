@@ -8,5 +8,5 @@ class AkunModel extends Model
 {
     protected $table = 'users';
     protected $useTimeStamps = true;
-    protected $allowedFields = ['username', 'user_image', 'fullname'];
+    protected $allowedFields = ['username', 'user_image', 'fullname','NIP','ISN','email'];
 }

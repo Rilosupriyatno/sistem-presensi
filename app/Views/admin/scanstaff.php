@@ -17,7 +17,7 @@
                         <input type="text" name="NIP" id="NIP" placeholder="NIP" hidden>
                     </form>
                     <video class="card-img-top" id="preview2" width="300" height="300"></video>
-                    <button onclick="scanner2.stop()">Matikan Camera</button>
+                    <!-- <button onclick="scanner2.stop()">Matikan Camera</button> -->
                     <button onclick="scan()">nyalakan Camera</button>
 
                 </div>

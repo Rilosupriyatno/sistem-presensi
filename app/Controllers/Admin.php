@@ -555,29 +555,68 @@ class Admin extends BaseController
         }
     }
     // Manage presensi
-    public function buatqr()
+    public function buatqr($id)
     {
-        $NI = $this->request->getVar('NI');
-        $url = "https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={$NI}";
-        if ($url != null) {
-            $data = [
-                'title' => 'buatqr',
-                'url' => $url,
-                'validation' => \Config\Services::validation(),
-                'dat_kelas' => $this->kelasModel->findAll(),
-            ];
-            return view('admin/buatqr', $data);
+        $NI = $this->akunModel->select('NIP')->find($id);
+        $IS = $this->akunModel->select('ISN')->find($id);
+        // $inden = implode(',', array_column($NI, 'NIP'));
+        if ($NI['NIP'] != null) {
+            $url = "https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={$NI['NIP']}";
+            if ($url != null) {
+                $data = [
+                    'title' => 'buatqr',
+                    'url' => $url,
+                    'validation' => \Config\Services::validation(),
+                    'dat_kelas' => $this->kelasModel->findAll(),
+                ];
+                return view('admin/buatqr', $data);
+            }
+        } else {
+            $url = "https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={$IS['ISN']}";
+            if ($url != null) {
+                $data = [
+                    'title' => 'buatqr',
+                    'url' => $url,
+                    'validation' => \Config\Services::validation(),
+                    'dat_kelas' => $this->kelasModel->findAll(),
+                ];
+                return view('admin/buatqr', $data);
+            }
         }
+    }
+    public function riwayat($id)
+    {
+        $currentPage = $this->request->getVar('page_riwayat') ? $this->request->getVar('page_riwayat') : 1;
+
+        $data = [
+            'title' => 'Riwayat',
+            'currentPage' => $currentPage
+        ];
+        $riwayat = $this->akunModel->select('users.ISN,data_siswa.nama, tanggal,waktu_datang,keterangan')->join('data_siswa', 'data_siswa.ISN = users.ISN')->join('presensi_siswa', 'data_siswa.ISN = presensi_siswa.ISN')->where('users.id', $id);
+        $data['riwayat'] = $riwayat->paginate(5, 'riwayat');
+        $data['pager'] = $this->akunModel->pager;
+        return view('admin/riwayat', $data);
     }
     public function scanqr()
     {
         $data = [
             'title' => 'scan siswa'
         ];
+        $resultsiswa = $this->kelasModel->select('presensi_siswa.ISN,nama,jenis_kelamin,kelas,tanggal,waktu_datang,keterangan')->join('data_siswa', 'kelas.id_kelas = data_siswa.id_kelas')->join('presensi_siswa', 'data_siswa.ISN = presensi_siswa.ISN');
+        $data['resultsiswa'] = $resultsiswa->paginate(5, 'resultsiswa');
+        $data['pager'] = $this->kelasModel->pager;
         return view('admin/scanqr', $data);
     }
     public function savescan()
     {
+        if (date("H:i:s") >= "07.00.00") {
+            $this->psModel->save([
+                'ISN' => $this->request->getVar('ISN'),
+                'keterangan' => "Terlambat"
+            ]);
+            session()->setFlashdata('pesan', 'Presensi Berhasil');
+            return redirect()->to('/admin/scanqr');
+        }
 
         $this->psModel->save([
             'ISN' => $this->request->getVar('ISN'),
@@ -594,6 +633,14 @@ class Admin extends BaseController
     }
     public function savescanstaff()
     {
+        if (date("H:i:s") >= "07.00.00") {
+            $this->psModel->save([
+                'NIP' => $this->request->getVar('NIP'),
+                'keterangan' => "Terlambat"
+            ]);
+            session()->setFlashdata('pesan', 'Presensi Berhasil');
+            return redirect()->to('/admin/scanqr');
+        }
 
         $this->pgModel->save([
             'NIP' => $this->request->getVar('NIP'),
@@ -676,5 +723,45 @@ class Admin extends BaseController
         $data['pager'] = $this->kelasModel->pager;
 
         return view('admin/exportsiswa', $data);
+    }
+    public function pres_sis()
+    {
+        $data = [
+            'title' => 'pres_sis',
+            'validation' => \Config\Services::validation()
+
+        ];
+        return view('admin/pres_sis', $data);
+    }
+    public function save_sis()
+    {
+        $this->psModel->save([
+            'ISN' => $this->request->getVar('ISN'),
+            'keterangan' => $this->request->getVar('keterangan'),
+
+        ]);
+
+        session()->setFlashdata('pesan', 'Data berhasil ditambahkan');
+        return redirect()->to('/admin/resultsiswa');
+    }
+    public function pres_staff()
+    {
+        $data = [
+            'title' => 'pres_staff',
+            'validation' => \Config\Services::validation()
+
+        ];
+        return view('admin/pres_staff', $data);
+    }
+    public function save_staff()
+    {
+        $this->psModel->save([
+            'NIP' => $this->request->getVar('NIP'),
+            'keterangan' => $this->request->getVar('keterangan'),
+
+        ]);
+
+        session()->setFlashdata('pesan', 'Data berhasil ditambahkan');
+        return redirect()->to('/admin/resultstaff');
     }
 }

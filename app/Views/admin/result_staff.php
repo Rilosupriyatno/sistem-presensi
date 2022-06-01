@@ -3,6 +3,7 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <!-- <a href="/admin/create_siswa" class="btn btn-primary mt-3" style="float: right;">Tambah Siswa</a> -->
+    <a href="/admin/pres_staff" class="btn btn-primary mt-3" style="float: right;">Sakit/Izin</a>
     <h1 class="h3 mb-4 text-gray-800">Presensi Staff</h1>
 
     <!-- DataTales Example -->
