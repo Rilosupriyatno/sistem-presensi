@@ -13,7 +13,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <div class="card-header-action" style="float: right;">
-                    <a href="/admin/userList" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i> Kembali</a>
+                    <a href="/admin/daftar_staff" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i> Kembali</a>
                 </div>
                 <table class="table" id="table_id" width="100%" cellspacing="0">
                     <div class="col-6">
@@ -29,7 +29,7 @@
                             <th>No</th>
                             <th>Foto</th>
                             <th>Nama</th>
-                            <th>jabatan</th>
+                            <th>Posisi</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -44,12 +44,12 @@
                     </tfoot>
                     <tbody>
                         <?php $i = 1 + (5 * ($currentPage - 1)); ?>
-                        <?php foreach ($data_pegawai as $user) : ?>
+                        <?php foreach ($data_staff as $user) : ?>
                             <tr>
                                 <td><?= $i++; ?></td>
                                 <td><img src="/img/<?= $user['foto']; ?>" alt="" class="foto"></td>
                                 <td><?= $user['nama']; ?></td>
-                                <td><?= $user['jabatan']; ?></td>
+                                <td><?= $user['posisi']; ?></td>
                                 <td>
                                     <a href="<?= base_url('/admin/restore/' . $user['id']) ?>" class="btn btn-info">Restore</a>
                                     <form action="<?= base_url('/admin/delete2/' . $user['id']) ?>" method="post" class="d-inline" onclick="return confirm('Yakin mau menghapus?');">
@@ -62,7 +62,7 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <?= $pager->links('data_pegawai', 'data_paginate') ?>
+                <?= $pager->links('data_staff', 'data_paginate') ?>
             </div>
         </div>
     </div>

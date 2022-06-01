@@ -41,23 +41,11 @@
                                             <?= session('errors.password') ?>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="custom-control custom-checkbox small">
-                                            <label class="custom-control-label" for="remember">
-                                                <input type="checkbox" class="custom-control-input" <?php if (old('remember')) : ?> checked <?php endif ?> name="remember">
-                                                <?= lang('Auth.rememberMe') ?>
-                                            </label>
-                                        </div>
-                                    </div>
                                     <button type="submit" class="btn btn-primary btn-user btn-block">
                                         <?= lang('Auth.loginAction') ?>
                                     </button>
                                     <hr>
-                                    <?php if ($config->allowRegistration) : ?>
-                                        <div class="text-center">
-                                            <a class="small" href="<?= route_to('forgot') ?>"><?= lang('Auth.forgotYourPassword') ?></a>
-                                        </div>
-                                    <?php endif; ?>
+
                                     <?php if ($config->allowRegistration) : ?>
                                         <div class="text-center">
                                             <a class="small" href="<?= route_to('register') ?>"><?= lang('Auth.needAnAccount') ?></a>

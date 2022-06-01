@@ -34,16 +34,20 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'User::page'); //, ['filter' => 'role:admin']);
 $routes->get('/admin', 'Admin::index', ['filter' => 'role:admin']); //, ['filter' => 'role:admin']);
 $routes->get('/admin/index', 'Admin::index', ['filter' => 'role:admin']); //, ['filter' => 'role:admin']);
-$routes->get('/admin', 'Admin::daftar_pegawai', ['filter' => 'role:admin']);
+$routes->get('/admin', 'Admin::daftar_staff', ['filter' => 'role:admin']);
 $routes->get('/admin/edit/(:segment)', 'Admin::edit/$1');
-$routes->get('/admin/editJabatan/(:segment)', 'Admin::editJabatan/$1');
-$routes->get('/admin/daftar_pegawai', 'Admin::daftar_pegawai', ['filter' => 'role:admin']); //, ['filter' => 'role:admin']);
+$routes->get('/admin/editStatus/(:segment)', 'Admin::editStatus/$1');
+$routes->get('/admin/daftar_staff', 'Admin::daftar_staff', ['filter' => 'role:admin']); //, ['filter' => 'role:admin']);
 $routes->get('/admin/(:num)', 'Admin::detail/$1', ['filter' => 'role:admin']); //, ['filter' => 'role:admin']);
+$routes->get('/admin/detail_siswa(:num)', 'Admin::detail_siswa/$1', ['filter' => 'role:admin']); //, ['filter' => 'role:admin']);
 $routes->get('/', 'User::page', ['filter' => 'role:user']);
 $routes->delete('/admin/(:num)', 'Admin::delete/$1');
 $routes->get('/admin/trash', 'Admin::trash');
+$routes->get('/admin/trash_siswa', 'Admin::trash_siswa');
 $routes->get('/admin/restore', 'Admin::restore/$1');
+$routes->get('/admin/restore_siswa', 'Admin::restore_siswa/$1');
 $routes->delete('/admin/delete2', 'Admin::delete2/$1');
+$routes->delete('/admin/delete2_siswa', 'Admin::delete2_siswa/$1');
 // $routes->get('/login', 'Home::index');
 /*
  * --------------------------------------------------------------------

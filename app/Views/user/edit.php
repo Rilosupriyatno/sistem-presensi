@@ -25,6 +25,15 @@
                     </div>
                 </div>
                 <div class="row mb-3">
+                    <label for="nomor_iden" class="col-sm-2 col-form-label">Nomor Identitas</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control <?= ($validation->hasError('nomor_iden')) ? 'is-invalid' : ''; ?>" id="nomor_iden" name="nomor_iden">
+                        <div class="invalid-feedback">
+                            <?= $validation->getError('nomor_iden'); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
                     <label for="foto" class="col-sm-2 col-form-label">Foto</label>
                     <div class="col-sm-2">
                         <img src="/img/default.svg" class="img-thumbnail img-preview">

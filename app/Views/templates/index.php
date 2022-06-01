@@ -16,13 +16,18 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url(); ?>/vendor/bootstrap/bootstrap-datepicker-1.9.0/dist/css/bootstrap-datepicker.min.css">
 
+    <!-- Datepicker -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@duetds/date-picker@1.4.0/dist/duet/duet.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@duetds/date-picker@1.4.0/dist/duet/duet.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@duetds/date-picker@1.4.0/dist/duet/themes/default.css" />
+
     <!-- Custom styles for this template-->
     <link href="<?= base_url(); ?>/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="<?= base_url(); ?>/css/style.css" rel="stylesheet">
 
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="setInterval('displayTime()', 1000);">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -106,6 +111,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="<?= base_url(); ?>/js/sb-admin-2.min.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 
     <script>
         function prevImg() {
@@ -124,12 +130,51 @@
             }
         }
 
+        function displayTime() {
+            var clientTime = new Date();
+            var time = new Date(clientTime.getTime());
+            var sh = time.getHours().toString();
+            var sm = time.getMinutes().toString();
+            var ss = time.getSeconds().toString();
+            document.getElementById("jam").innerHTML = (sh.length == 1 ? "0" + sh : sh) + ":" + (sm.length == 1 ? "0" + sm : sm) + ":" + (ss.length == 1 ? "0" + ss : ss);
+            document.getElementById("jaminput").value = (sh.length == 1 ? "0" + sh : sh) + ":" + (sm.length == 1 ? "0" + sm : sm) + ":" + (ss.length == 1 ? "0" + ss : ss);
+        }
+
         function prevFile() {
             const SK = document.querySelector('#SK');
             const label = document.querySelector('.custom-file-label');
             label.textContent = SK.files[0].name;
             const fileSK = new FileReader();
             fileSK.readAsDataURL(SK.files[0]);
+        }
+
+        let scanner = new Instascan.Scanner({
+            video: document.getElementById('preview')
+        });
+        let scanner2 = new Instascan.Scanner({
+            video: document.getElementById('preview2')
+        });
+        scanner.addListener('scan', function(content) {
+            document.getElementById('ISN').value = content;
+            document.forms[0].submit();
+        });
+        scanner2.addListener('scan', function(content) {
+            document.getElementById('NIP').value = content;
+            document.forms[0].submit();
+        });
+
+
+        function scan() {
+            Instascan.Camera.getCameras().then(function(cameras) {
+                if (cameras.length > 0) {
+                    scanner.start(cameras[0]);
+                    scanner2.start(cameras[0]);
+                } else {
+                    console.error('No cameras found.');
+                }
+            }).catch(function(e) {
+                console.error(e);
+            });
         }
     </script>
 

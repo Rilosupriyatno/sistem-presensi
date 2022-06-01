@@ -7,7 +7,6 @@
 .foto-detail {
   width: 150px;
   height: 250px;
-  float: right;
-  padding-right: 10px;
-  padding-top: 50px;
+  /* padding-right: 10px; */
+  padding-top: 10px;
 }
