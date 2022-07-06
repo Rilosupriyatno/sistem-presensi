@@ -25,14 +25,14 @@
         Menu
     </div>
     <?php if (in_groups('admin')) : ?>
-        <li class="nav-item active">
+        <li class="nav-item active tutup">
             <a class="nav-link" href="<?= base_url('admin'); ?>">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
         </li>
 
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
+        <li class="nav-item tutup">
             <a class="nav-link collapsed" href="<?= base_url('admin'); ?>" data-toggle="collapse" data-target="#collapseStaff" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>Manage Data</span>
@@ -48,7 +48,7 @@
                 </div>
             </div>
         </li>
-        <li class="nav-item">
+        <li class="nav-item tutup">
             <a class="nav-link collapsed" href="<?= base_url('admin'); ?>" data-toggle="collapse" data-target="#collapsePresensiSiswa" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>Manage Siswa</span>
@@ -61,7 +61,7 @@
                 </div>
             </div>
         </li>
-        <li class="nav-item">
+        <li class="nav-item tutup">
             <a class="nav-link collapsed" href="<?= base_url('admin'); ?>" data-toggle="collapse" data-target="#collapsePresensiStaff" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>Manage Staff</span>

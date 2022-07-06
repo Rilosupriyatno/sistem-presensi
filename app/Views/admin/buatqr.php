@@ -13,9 +13,9 @@
                     </div>
                 </div> -->
                 <?php if (!empty($url)) : ?>
-                    <div class="container" style="margin-right:100%; margin-top:40%;">
+                    <div class="container" style="margin-right:100%;">
                         <div class="mb-3">
-                            <img src="<?= $url; ?>" alt="QrCode" width="200%" height="200%" download>
+                            <img src="<?= $url; ?>" alt="QrCode" width="50%" height="50%" class="qrcode">
                         </div>
                     </div>
                 <?php endif; ?>
