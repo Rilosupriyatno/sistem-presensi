@@ -57,14 +57,28 @@ class User extends BaseController
             // Pindahkan gambar ke folder public
             $fileFoto->move('img', $namaFoto);
         }
-        $this->akunModel->save([
-            'id' => $id,
-            'username' => $this->request->getVar('username'),
-            'fullname' => $this->request->getVar('fullname'),
-            'user_image' => $namaFoto
-        ]);
+        $iden = $this->request->getVar('nomor_iden');
+        if (strlen($iden) >= 18) {
+            $this->akunModel->save([
+                'id' => $id,
+                'username' => $this->request->getVar('username'),
+                'fullname' => $this->request->getVar('fullname'),
+                'NIP'   => $this->request->getVar('nomor_iden'),
+                'user_image' => $namaFoto
+            ]);
+            session()->setFlashdata('pesan', 'Data berhasil diubah');
+            return redirect()->to('user/index/' . user_id());
+        } else if (strlen($iden) <= 9) {
+            $this->akunModel->save([
+                'id' => $id,
+                'username' => $this->request->getVar('username'),
+                'fullname' => $this->request->getVar('fullname'),
+                'ISN' => $this->request->getVar('nomor_iden'),
+                'user_image' => $namaFoto
+            ]);
 
-        session()->setFlashdata('pesan', 'Data berhasil diubah');
-        return redirect()->to('user/index/' . user_id());
+            session()->setFlashdata('pesan', 'Data berhasil diubah');
+            return redirect()->to('user/index/' . user_id());
+        }
     }
 }

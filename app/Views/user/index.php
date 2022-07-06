@@ -9,7 +9,7 @@
             <div class="card mb-3 shadow" style="max-width: 540px;">
                 <div class="row no-gutters m">
                     <!-- <div class="row g-0">  -->
-                    <div class="col-md-4">
+                    <div class="col-md-4 d-flex justify-content-center">
                         <br>
                         <img src="<?= base_url('/img/' . $users->user_image); ?>" alt="<?= $users->username; ?>" class="foto-detail">
                     </div>

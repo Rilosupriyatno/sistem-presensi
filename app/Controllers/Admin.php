@@ -6,12 +6,15 @@ use App\Models\AdminModel;
 use App\Models\HistoriModel;
 use App\Models\HaModel;
 use App\Models\AkunModel;
-use App\Models\JabatanModel;
-use App\Models\PresensiModel;
+use App\Models\PosisiModel;
+use App\Models\PsModel;
+use App\Models\PgModel;
+use App\Models\SiswaModel;
+use App\Models\KelasModel;
 
 class Admin extends BaseController
 {
-    protected $adminModel, $historiModel, $HaModel, $akunModel, $jabatanModel, $presensiModel;
+    protected $adminModel, $historiModel, $HaModel, $akunModel, $posisiModel, $psModel, $siswaModel, $kelasModel, $pgModel;
     public function __construct()
     {
         $this->session = service('session');
@@ -21,27 +24,22 @@ class Admin extends BaseController
         $this->historiModel = new HistoriModel();
         $this->haModel = new HaModel();
         $this->akunModel = new AkunModel();
-        $this->jabatanModel = new JabatanModel();
-        $this->presensiModel = new PresensiModel();
+        $this->posisiModel = new posisiModel();
+        $this->psModel = new PsModel();
+        $this->siswaModel = new SiswaModel();
+        $this->kelasModel = new KelasModel();
+        $this->pgModel = new PgModel();
     }
 
     public function index()
     {
-        // $data = [
-        //     'config' => $this->config
-        // ];
-        // return view('admin/index', $data);
         $jumlah = $this->adminModel->data();
-        $data['jumlah'] = $jumlah;
-        $data['title'] = 'Dashboard';
-        // $users = new \Myth\Auth\Models\UserModel();
-        // $data['users'] = $users->findAll();
-        // $this->adminModel->select('pegawai.id as pegawaiid, NIK, users.foto, nama, tanggal, jabatan, pendikte, email, name');
-        // $this->adminModel->select('users', 'users.id = pegawai.id');
-        // $this->adminModel->join('auth_groups_users', 'auth_groups_users.user_id = users.id');
-        // $this->adminModel->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id');
-        // $query = $this->adminModel->get();
-        // $data['users'] = $query->getResult();
+        $jumlah_siswa = $this->siswaModel->data_siswa();
+        $data = [
+            'title' => 'Dashboard',
+            'jumlah_siswa' => $jumlah_siswa,
+            'jumlah' => $jumlah,
+        ];
         return view('admin/index', $data);
     }
     public function create()
@@ -49,25 +47,24 @@ class Admin extends BaseController
         $data = [
             'title' => 'Tambah Data',
             'validation' => \Config\Services::validation(),
-            'jabatan' => $this->historiModel->findAll()
+            'posisi' => $this->historiModel->findAll()
         ];
         return view('admin/create', $data);
     }
-
     public function save()
     {
         helper(['form', 'url']);
         // validasi
         if (!$this->validate([
-            'NIK' => [
-                'rules' => 'required|is_unique[data_pegawai.NIK]',
+            'NIP' => [
+                'rules' => 'required|is_unique[data_staff.NIP]',
                 'errors' => [
-                    'required' => 'NIK harus diisi',
-                    'is_unique' => 'NIK sudah ada'
+                    'required' => 'NIP harus diisi',
+                    'is_unique' => 'NIP sudah ada'
                 ]
             ],
             'nama' => [
-                'rules' => 'required[data_pegawai.nama]',
+                'rules' => 'required[data_staff.nama]',
                 'errors' => [
                     'required' => 'Nama harus diisi',
                 ]
@@ -80,20 +77,14 @@ class Admin extends BaseController
                     'mime_in' => 'Yang anda pilih bukan gambar'
                 ]
             ],
-            'tanggal' => [
-                'rules' => 'required[data_pegawai.tanggal_lahir]',
-                'errors' => [
-                    'required' => 'tanggal harus diisi'
-                ]
-            ],
             'alamat' => [
-                'rules' => 'required[data_pegawai.alamat]',
+                'rules' => 'required[data_staff.alamat]',
                 'errors' => [
                     'required' => 'tanggal harus diisi'
                 ]
             ],
             'pendikte' => [
-                'rules' => 'required[data_pegawai.pendikte]',
+                'rules' => 'required[data_staff.pendikte]',
                 'errors' => [
                     'required' => 'pendidikan terakhir harus diisi',
                 ]
@@ -115,23 +106,13 @@ class Admin extends BaseController
             $fileFoto->move('img', $namaFoto);
         }
         $this->adminModel->save([
-            'NIK' => $this->request->getVar('NIK'),
+            'NIP' => $this->request->getVar('NIP'),
             'nama' => $this->request->getVar('nama'),
             'foto' => $namaFoto,
-            'tanggal_lahir' => $this->request->getVar('tanggal'),
             'alamat' => $this->request->getVar('alamat'),
             'pendikte' => $this->request->getVar('pendikte'),
             'jenkel' => $this->request->getVar('jenkel'),
         ]);
-        // $jb = $this->historiModel->find();
-        // if ($jb['id_jabatan']) {
-        //     $data = [
-        //         'id_jabatan' => $this->request->getVar('id_jabatan')
-        //     ];
-        //     $this->historiModel->insert($data);
-        //     session()->setFlashdata('pesan', 'Data berhasil direstore');
-        //     return redirect()->to('/admin/trash');
-        // }
 
         session()->setFlashdata('pesan', 'Data berhasil ditambahkan');
         return redirect()->to('/admin/mutasi_pegawai');
@@ -141,72 +122,12 @@ class Admin extends BaseController
         $data = [
             'title' => 'Edit Data',
             'validation' => \Config\Services::validation(),
-            'pegawai' => $this->adminModel->where('id', $id)->first()
+            'staff' => $this->adminModel->where('id', $id)->first()
         ];
         return view('admin/edit', $data);
     }
     public function update($id)
     {
-
-        // helper(['form', 'url']);
-        // $dataLama = $this->adminModel->getPegawai($this->request->getVar('id'));
-        // if ($dataLama['NIK'] == $this->request->getVar('NIK')) {
-        //     $rule = 'required';
-        // } else {
-        //     $rule = 'required|is_unique[data_pegawai.NIK]';
-        // }
-        // // validasi
-        // if (!$this->validate([
-        //     'NIK' => [
-        //         'rules' => $rule,
-        //         'errors' => [
-        //             'required' => 'NIK harus diisi',
-        //             'is_unique' => 'NIK sudah ada'
-        //         ]
-        //     ],
-        //     'nama' => [
-        //         'rules' => 'required[data_pegawai.nama]',
-        //         'errors' => [
-        //             'required' => 'Nama harus diisi',
-        //         ]
-        //     ],
-        //     'foto' => [
-        //         'rules' => 'max_size[foto,2048]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png,image/svg]',
-        //         'errors' => [
-        //             'max_size' => 'Ukuran foto terlalu besar',
-        //             'is_image' => 'Yang anda pilih bukan gambar',
-        //             'mime_in' => 'Yang anda pilih bukan gambar'
-        //         ]
-        //     ],
-        //     'tanggal' => [
-        //         'rules' => 'required[data_pegawai.tanggal_lahir]',
-        //         'errors' => [
-        //             'required' => 'tanggal harus diisi'
-        //         ]
-        //     ],
-        //     'alamat' => [
-        //         'rules' => 'required[data_pegawai.alamat]',
-        //         'errors' => [
-        //             'required' => 'tanggal harus diisi'
-        //         ]
-        //     ],
-        //     'pendikte' => [
-        //         'rules' => 'required[data_pegawai.pendikte]',
-        //         'errors' => [
-        //             'required' => 'pendidikan terakhir harus diisi',
-        //         ]
-        //     ],
-        //     'id_jabatan' => [
-        //         'rules' => 'required[data_pegawai.jabatan]',
-        //         'errors' => [
-        //             'required' => 'Jabatan harus dipilih'
-        //         ]
-        //     ]
-        // ])) {
-        //     // $validation = \Config\Services::validation();
-        //     // return redirect()->to('/admin/create')->withInput()->with('validation', $validation);
-        //     return redirect()->to('/admin/edit/' . $this->request->getVar('id'))->withInput();
-        // }
         $foto = $this->adminModel->find($id);
         $fileFoto = $this->request->getFile('foto');
         // Apakah tidak ada gambar yang diupload
@@ -220,17 +141,90 @@ class Admin extends BaseController
         }
         $this->adminModel->save([
             'id' => $id,
-            'NIK' => $this->request->getVar('NIK'),
+            'NIP' => $this->request->getVar('NIP'),
             'nama' => $this->request->getVar('nama'),
             'foto' => $namaFoto,
-            'tanggal_lahir' => $this->request->getVar('tanggal'),
             'alamat' => $this->request->getVar('alamat'),
             'pendikte' => $this->request->getVar('pendikte'),
             'jenkel' => $this->request->getVar('jenkel'),
         ]);
 
         session()->setFlashdata('pesan', 'Data berhasil diubah');
-        return redirect()->to('/admin/daftar_pegawai');
+        return redirect()->to('/admin/daftar_staff');
+    }
+    public function create_siswa()
+    {
+        $data = [
+            'title' => 'Tambah Data Siswa',
+            'validation' => \Config\Services::validation(),
+            'kelas' => $this->kelasModel->findAll()
+        ];
+        return view('admin/create_siswa', $data);
+    }
+    public function save_siswa()
+    {
+        helper(['form', 'url']);
+        // validasi
+        if (!$this->validate([
+            'ISN' => [
+                'rules' => 'required|is_unique[data_siswa.ISN]',
+                'errors' => [
+                    'required' => 'ISN harus diisi',
+                    'is_unique' => 'ISN sudah ada'
+                ]
+            ],
+            'nama' => [
+                'rules' => 'required[data_siswa.nama]',
+                'errors' => [
+                    'required' => 'Nama harus diisi',
+                ]
+            ],
+            'jenis_kelamin' => [
+                'rules' => 'required[data_siswa.jenis_kelamin]',
+                'errors' => [
+                    'required' => 'Jenis kelamin harus diisi',
+                ]
+            ],
+            'id_kelas' => [
+                'rules' => 'required[data_siswa.id_kelas]',
+                'errors' => [
+                    'required' => 'Kelas harus diisi',
+                ]
+            ],
+        ])) {
+            return redirect()->to('/admin/create_siswa')->withInput();
+        }
+        $this->siswaModel->save([
+            'ISN' => $this->request->getVar('ISN'),
+            'nama' => $this->request->getVar('nama'),
+            'jenis_kelamin' => $this->request->getVar('jenis_kelamin'),
+            'id_kelas' => $this->request->getVar('id_kelas'),
+        ]);
+
+        session()->setFlashdata('pesan', 'Data berhasil ditambahkan');
+        return redirect()->to('/admin/daftar_siswa');
+    }
+    public function edit_siswa($id)
+    {
+        $data = [
+            'title' => 'Edit Data',
+            'validation' => \Config\Services::validation(),
+            'siswa' => $this->siswaModel->where('id', $id)->first(),
+            'kelas' => $this->kelasModel->findAll()
+        ];
+        return view('admin/edit_siswa', $data);
+    }
+    public function update_siswa($id)
+    {
+        $this->siswaModel->save([
+            'id' => $id,
+            'ISN' => $this->request->getVar('ISN'),
+            'nama' => $this->request->getVar('nama'),
+            'jenis_kelamin' => $this->request->getVar('jenis_kelamin'),
+            'id_kelas' => $this->request->getVar('kelas'),
+        ]);
+        session()->setFlashdata('pesan', 'Data berhasil diubah');
+        return redirect()->to('/admin/daftar_siswa');
     }
     public function hapusJB($id)
     {
@@ -241,29 +235,29 @@ class Admin extends BaseController
     public function mutasi($id)
     {
         $data = [
-            'title' => 'Mutasi Jabatan',
+            'title' => 'posisi',
             'validation' => \Config\Services::validation(),
-            'jabatan' => $this->jabatanModel->findAll(7),
-            'NIK' => $this->adminModel->findAll(),
-            'jabat' => $this->historiModel->where('id', $id)->first()
+            'posisi' => $this->posisiModel->findAll(4),
+            'NIP' => $this->adminModel->findAll(),
+            'stat' => $this->historiModel->where('id', $id)->first()
 
         ];
         return view('admin/mutasi', $data);
     }
     public function mutate($id)
     {
-        $fileSK = $this->request->getFile('SK');
-        // Apakah tidak ada gambar yang diupload
-        // Ambil nama file
-        $namaFile = $fileSK->getRandomName();
-        // Pindahkan gambar ke folder public
-        $fileSK->move('SK', $namaFile);
+        // $fileSK = $this->request->getFile('SK');
+        // // Apakah tidak ada gambar yang diupload
+        // // Ambil nama file
+        // $namaFile = $fileSK->getRandomName();
+        // // Pindahkan gambar ke folder public
+        // $fileSK->move('SK', $namaFile);
         $this->historiModel->save([
             'id' => $id,
-            'NIK' => $this->request->getVar('NIK'),
-            'id_jabatan' => $this->request->getVar('id_jabatan'),
-            'no_sk' => $this->request->getVar('no_sk'),
-            'sk' => $namaFile,
+            'NIP' => $this->request->getVar('NIP'),
+            'id_posisi' => $this->request->getVar('id_posisi'),
+            // 'no_sk' => $this->request->getVar('no_sk'),
+            // 'sk' => $namaFile,
             'tgl_mulai' => $this->request->getVar('tgl_mulai'),
             'creator' => $this->request->getVar('creator'),
         ]);
@@ -275,15 +269,15 @@ class Admin extends BaseController
             ];
             $this->historiModel->update($id, $data);
         }
-        session()->setFlashdata('pesan', 'Jabatan Berhasil di Ubah');
-        return redirect()->to('/admin/daftar_pegawai');
+        session()->setFlashdata('pesan', 'posisi Berhasil di Ubah');
+        return redirect()->to('/admin/daftar_staff');
     }
-    public function editJabatan($id)
+    public function editposisi($id)
     {
         $data = [
-            'title' => 'Edit Jabatan',
+            'title' => 'Edit posisi',
             'validation' => \Config\Services::validation(),
-            'jabat' => $this->historiModel->where('id', $id)->first()
+            'posisi' => $this->historiModel->where('id', $id)->first()
         ];
         return view('admin/edit_histori', $data);
     }
@@ -291,15 +285,15 @@ class Admin extends BaseController
     {
         $this->historiModel->save([
             'id' => $id,
-            'NIK' => $this->request->getVar('NIK'),
-            'id_jabatan' => $this->request->getVar('id_jabatan'),
+            'NIP' => $this->request->getVar('NIP'),
+            'id_posisi' => $this->request->getVar('id_posisi'),
             'tgl_berakhir' => $this->request->getVar('tgl_berakhir'),
             'updator' => $this->request->getVar('updator'),
         ]);
         $del = $this->historiModel->find($id);
         if ($del['tgl_berakhir'] != null) {
             $data = [
-                'id_jabatan' => 8
+                'id_posisi' => 8
             ];
             $this->historiModel->update($id, $data);
         }
@@ -309,74 +303,109 @@ class Admin extends BaseController
     }
     public function delete($id)
     {
-        // $pegawai = $this->adminModel->find($id);
-        // if ($pegawai['foto'] != 'default.svg') {
-        //     unlink('img/' . $pegawai['foto']);
+        // $staff = $this->adminModel->find($id);
+        // if ($staff['foto'] != 'default.svg') {
+        //     unlink('img/' . $staff['foto']);
         // }
         $this->adminModel->delete($id);
         session()->setFlashdata('pesan', 'Data berhasil dihapus');
-        return redirect()->to('/admin/daftar_pegawai');
+        return redirect()->to('/admin/daftar_staff');
     }
-    public function daftar_pegawai()
+    public function delete_siswa($id)
     {
-        $currentPage = $this->request->getVar('page_data_pegawai') ? $this->request->getVar('page_data_pegawai') : 1;
+        $this->siswaModel->delete($id);
+        session()->setFlashdata('pesan', 'Data berhasil dihapus');
+        return redirect()->to('/admin/daftar_siswa');
+    }
+    public function daftar_staff()
+    {
+        $currentPage = $this->request->getVar('page_data_staff') ? $this->request->getVar('page_data_staff') : 1;
         $keyword = $this->request->getVar('keyword');
         if ($keyword) {
-            $data_pegawai = $this->adminModel->search($keyword);
+            $datastaff = $this->adminModel->search($keyword);
         } else {
-            $data_pegawai = $this->adminModel;
+            $datastaff = $this->adminModel;
         }
         $data = [
-            'title' => 'Daftar Pegawai',
+            'title' => 'Daftar staff',
             'currentPage' => $currentPage
         ];
-        // $dataPegawai = $this->adminModel->select('data_pegawai.id pegawaiid, foto, nama, data_pegawai.id_jabatan, jabatan')->join('jabatan', 'data_pegawai.id_jabatan = jabatan.id_jabatan');
-
-        // $dataPegawai = $this->adminModel->select('data_pegawai.id pegawaiid, foto, data_pegawai.nama, data_pegawai.NIK, jenkel');
-        $dataPegawai = $this->adminModel->select('data_pegawai.id pegawaiid, foto, data_pegawai.nama, data_pegawai.NIK, histori.id_jabatan, jabatan')->join('histori', 'data_pegawai.NIK = histori.NIK', 'left')->join('jabatan', 'jabatan.id_jabatan = histori.id_jabatan', 'left');
-        // $datahistori = $this->historiModel->select('histori.id pegawaiid, foto, data_pegawai.nama, data_pegawai.NIK, histori.id_jabatan, jabatan')->join('histori', 'data_pegawai.NIK = histori.NIK')->join('jabatan', 'jabatan.id_jabatan = histori.id_jabatan');
-        // $data['datahistori'] = $datahistori;
-        $data['data_pegawai'] = $dataPegawai->paginate(5, 'data_pegawai');
+        $datastaff = $this->adminModel->select('data_staff.id staffid, foto, data_staff.nama, data_staff.NIP, histori.id_posisi, posisi')->join('histori', 'data_staff.NIP = histori.NIP', 'left')->join('posisi', 'posisi.id_posisi = histori.id_posisi', 'left');
+        $data['data_staff'] = $datastaff->paginate(5, 'data_staff');
         $data['pager'] = $this->adminModel->pager;
-        return view('admin/daftar_pegawai', $data);
+        return view('admin/daftar_staff', $data);
+    }
+    public function daftar_siswa()
+    {
+        $currentPage = $this->request->getVar('page_data_siswa') ? $this->request->getVar('page_data_siswa') : 1;
+        $keyword = $this->request->getVar('keyword');
+        if ($keyword) {
+            $datasiswa = $this->siswaModel->search($keyword);
+        } else {
+            $datasiswa = $this->siswaModel;
+        }
+        $data = [
+            'title' => 'Daftar Siswa',
+            'currentPage' => $currentPage
+        ];
+
+        $datasiswa = $this->siswaModel->select('data_siswa.id siswaid, ISN, data_siswa.nama, data_siswa.jenis_kelamin, kelas.id_kelas, kelas, wali_kelas')->join('kelas', 'kelas.id_kelas = data_siswa.id_kelas', 'left');
+        $data['data_siswa'] = $datasiswa->paginate(5, 'data_siswa');
+        $data['pager'] = $this->siswaModel->pager;
+        return view('admin/daftar_siswa', $data);
     }
     public function detail($id = 0)
     {
         $data['title'] = 'User Detail';
-        // $this->adminModel->select('data_pegawai.id_usr as pegawaiid, NIK, foto, nama, tangla, templa, alamat, id_jabatan, pendikte, name');
-        // $this->adminModel->join('users', 'users.id = pegawai.id');
-        // $this->adminModel->join('auth_groups_users', 'auth_groups_users.user_id = data_pegawai.id_usr');
+        // $this->adminModel->select('data_siswa.id_usr as staffid, NIP, foto, nama, tangla, templa, alamat, id_posisi, pendikte, name');
+        // $this->adminModel->join('users', 'users.id = staff.id');
+        // $this->adminModel->join('auth_groups_users', 'auth_groups_users.user_id = data_staff.id_usr');
         // $this->adminModel->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id');
-        // $this->adminModel->where('data_pegawai.id_usr', $id);
+        // $this->adminModel->where('data_staff.id_usr', $id);
         // $query = $this->adminModel->get();
-        $this->adminModel->select('data_pegawai.id pegawaiid, foto, data_pegawai.nama, data_pegawai.NIK, jenkel, jabatan, histori.id_jabatan');
-        $this->adminModel->join('histori', 'data_pegawai.NIK = histori.NIK');
-        $this->adminModel->join('jabatan', 'jabatan.id_jabatan = histori.id_jabatan');
-        $this->adminModel->where('data_pegawai.id', $id);
-        // $this->adminModel->select('data_pegawai.id pegawaiid, NIK, foto, nama, data_pegawai.id_jabatan, jabatan');
-        // $this->adminModel->join('jabatan', 'jabatan.id_jabatan = data_pegawai.id_jabatan');
-        // $this->adminModel->where('data_pegawai.id', $id);
+        $this->adminModel->select('data_staff.id staffid, foto, data_staff.nama, data_staff.NIP, jenkel, posisi, histori.id_posisi');
+        $this->adminModel->join('histori', 'data_staff.NIP = histori.NIP');
+        $this->adminModel->join('posisi', 'posisi.id_posisi = histori.id_posisi');
+        $this->adminModel->where('data_staff.id', $id);
+        // $this->adminModel->select('data_staff.id staffid, NIP, foto, nama, data_staff.id_posisi, posisi');
+        // $this->adminModel->join('posisi', 'posisi.id_posisi = data_staff.id_posisi');
+        // $this->adminModel->where('data_staff.id', $id);
         $query = $this->adminModel->get();
-        $data['data_pegawai'] = $query->getRow();
-        if (empty($data['data_pegawai'])) {
+        $data['data_staff'] = $query->getRow();
+        if (empty($data['data_staff'])) {
             return redirect()->to('/admin');
         }
         return view('admin/detail', $data);
     }
+    public function detail_siswa($id = 0)
+    {
+        $data['title'] = 'Detail Siswa';
+
+        $this->siswaModel->select('data_siswa.id siswaid, ISN, data_siswa.nama, jenis_kelamin, kelas, wali_kelas');
+        $this->siswaModel->join('kelas', 'kelas.id_kelas = data_siswa.id_kelas');
+        $this->siswaModel->where('data_siswa.id', $id);
+
+        $query = $this->siswaModel->get();
+        $data['data_siswa'] = $query->getRow();
+        if (empty($data['data_siswa'])) {
+            return redirect()->to('/admin');
+        }
+        return view('admin/detail_siswa', $data);
+    }
     public function mutasi_pegawai()
     {
-        $currentPage = $this->request->getVar('page_data_pegawai') ? $this->request->getVar('page_data_pegawai') : 1;
+        $currentPage = $this->request->getVar('page_data_staff') ? $this->request->getVar('page_data_staff') : 1;
         $keyword = $this->request->getVar('keyword');
         if ($keyword) {
-            $data_pegawai = $this->historiModel->search($keyword);
+            $data_staff = $this->historiModel->search($keyword);
         } else {
-            $data_pegawai = $this->historiModel;
+            $data_staff = $this->historiModel;
         }
         $data = [
-            'title' => 'Mutasi Pegawai',
+            'title' => 'posisi',
             'currentPage' => $currentPage
         ];
-        $logHistori = $this->historiModel->select('histori.id,histori.NIK,nama, histori.id_jabatan, jabatan, tgl_mulai, tgl_berakhir, histori.creator, histori.updator')->join('data_pegawai', 'data_pegawai.NIK = histori.NIK')->join('jabatan', 'jabatan.id_jabatan = histori.id_jabatan');
+        $logHistori = $this->historiModel->select('histori.id,histori.NIP,nama, histori.id_posisi, posisi, tgl_mulai, tgl_berakhir, histori.creator, histori.updator')->join('data_staff', 'data_staff.NIP = histori.NIP')->join('posisi', 'posisi.id_posisi = histori.id_posisi');
         $data['logHistori'] = $logHistori->paginate(5, 'histori');
         $data['pager'] = $this->historiModel->pager;
         return view('admin/mutasi_pegawai', $data);
@@ -386,12 +415,12 @@ class Admin extends BaseController
 
     public function histori_akun()
     {
-        $currentPage = $this->request->getVar('page_data_pegawai') ? $this->request->getVar('page_data_pegawai') : 1;
+        $currentPage = $this->request->getVar('page_data_staff') ? $this->request->getVar('page_data_staff') : 1;
         $keyword = $this->request->getVar('keyword');
         if ($keyword) {
-            $data_pegawai = $this->haModel->search($keyword);
+            $data_staff = $this->haModel->search($keyword);
         } else {
-            $data_pegawai = $this->haModel;
+            $data_staff = $this->haModel;
         }
         $data = [
             'title' => 'Histori Akun',
@@ -404,12 +433,12 @@ class Admin extends BaseController
     }
     public function daftar_akun()
     {
-        $currentPage = $this->request->getVar('page_data_pegawai') ? $this->request->getVar('page_data_pegawai') : 1;
+        $currentPage = $this->request->getVar('page_data_staff') ? $this->request->getVar('page_data_staff') : 1;
         $keyword = $this->request->getVar('keyword');
         if ($keyword) {
-            $data_pegawai = $this->akunModel->search($keyword);
+            $data_staff = $this->akunModel->search($keyword);
         } else {
-            $data_pegawai = $this->akunModel;
+            $data_staff = $this->akunModel;
         }
         $data = [
             'title' => 'Daftar Akun',
@@ -420,21 +449,21 @@ class Admin extends BaseController
         // $this->akunModel->select('users.id as userid, username, email, name');
         // $this->akunModel->join('auth_groups_users', 'auth_groups_users.user_id = users.id');
         // $this->akunModel->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id');
-        // $dataPegawai = $this->akunModel->findAll();
-        // $this->akunModel->select('data_pegawai.id pegawaiid, foto, nama, data_pegawai.id_jabatan, jabatan');
-        // $this->akunModel->join('jabatan', 'data_pegawai.id_jabatan = jabatan.id_jabatan');
+        // $datastaff = $this->akunModel->findAll();
+        // $this->akunModel->select('data_staff.id staffid, foto, nama, data_staff.id_posisi, posisi');
+        // $this->akunModel->join('posisi', 'data_staff.id_posisi = posisi.id_posisi');
         // $query = $this->akunModel->get();
-        // $data['data_pegawai'] = $query->getResult();
+        // $data['data_staff'] = $query->getResult();
         $data['data_akun'] = $this->akunModel->paginate(5, 'users');
         $data['pager'] = $this->akunModel->pager;
-        // $data['data_pegawai'] = $query->getResult();
+        // $data['data_staff'] = $query->getResult();
         return view('admin/daftar_akun', $data);
     }
     public function hapus($id)
     {
-        $pegawai = $this->akunModel->find($id);
-        // if ($pegawai['foto'] != 'default.svg') {
-        //     unlink('img/' . $pegawai['foto']);
+        $staff = $this->akunModel->find($id);
+        // if ($staff['foto'] != 'default.svg') {
+        //     unlink('img/' . $staff['foto']);
         // }
         $this->akunModel->delete($id);
         session()->setFlashdata('pesan', 'Data berhasil dihapus');
@@ -442,21 +471,21 @@ class Admin extends BaseController
     }
     public function trash()
     {
-        $currentPage = $this->request->getVar('page_data_pegawai') ? $this->request->getVar('page_data_pegawai') : 1;
+        $currentPage = $this->request->getVar('page_data_staff') ? $this->request->getVar('page_data_staff') : 1;
         $keyword = $this->request->getVar('keyword');
         if ($keyword) {
-            $data_pegawai = $this->adminModel->search($keyword);
+            $data_staff = $this->adminModel->search($keyword);
         } else {
-            $data_pegawai = $this->adminModel;
+            $data_staff = $this->adminModel;
         }
         $data = [
             'title' => 'Trash',
             'currentPage' => $currentPage
         ];
-        // $dataPegawai = $this->adminModel->select('data_pegawai.id pegawaiid, foto, nama, data_pegawai.id_jabatan, jabatan')->join('jabatan', 'data_pegawai.id_jabatan = jabatan.id_jabatan');
-        $dataPegawai = $this->adminModel->select('data_pegawai.id, foto, data_pegawai.nama, data_pegawai.NIK, histori.id_jabatan, jabatan')->join('histori', 'data_pegawai.NIK = histori.NIK')->join('jabatan', 'jabatan.id_jabatan = histori.id_jabatan')->onlyDeleted();
+        // $datastaff = $this->adminModel->select('data_staff.id staffid, foto, nama, data_staff.id_posisi, posisi')->join('posisi', 'data_staff.id_posisi = posisi.id_posisi');
+        $datastaff = $this->adminModel->select('data_staff.id, foto, data_staff.nama, data_staff.NIP, histori.id_posisi, posisi')->join('histori', 'data_staff.NIP = histori.NIP')->join('posisi', 'posisi.id_posisi = histori.id_posisi')->onlyDeleted();
 
-        $data['data_pegawai'] = $dataPegawai->paginate(5, 'data_pegawai');
+        $data['data_staff'] = $datastaff->paginate(5, 'data_staff');
         $data['pager'] = $this->adminModel->pager;
         return view('admin/trash', $data);
     }
@@ -474,9 +503,9 @@ class Admin extends BaseController
     }
     public function delete2($id)
     {
-        $pegawai = $this->adminModel->onlyDeleted()->find($id);
-        if ($pegawai['foto'] != 'default.svg') {
-            unlink('img/' . $pegawai['foto']);
+        $staff = $this->adminModel->onlyDeleted()->find($id);
+        if ($staff['foto'] != 'default.svg') {
+            unlink('img/' . $staff['foto']);
         }
         $del = $this->adminModel->onlyDeleted()->find($id);
         if ($del['deleted_at'] != null) {
@@ -485,25 +514,254 @@ class Admin extends BaseController
             return redirect()->to('/admin/trash');
         }
     }
-
-    // Manage presensi
-    public function buatqr()
+    public function trash_siswa()
     {
-        $nama = $this->request->getVar('nama');
-        $email = $this->request->getVar('email');
-        $url = "https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={$nama}{$email}";
-        if ($nama && $email != null) {
-            $data = [
-                'title' => 'buatqr',
-                'url' => $url,
-                'validation' => \Config\Services::validation(),
-                'jabatan' => $this->historiModel->findAll()
-            ];
-            return view('admin/buatqr', $data);
+        $currentPage = $this->request->getVar('page_data_siswa') ? $this->request->getVar('page_data_siswa') : 1;
+        $keyword = $this->request->getVar('keyword');
+        if ($keyword) {
+            $data_staff = $this->siswaModel->search($keyword);
+        } else {
+            $data_staff = $this->siswaModel;
         }
         $data = [
-            'title' => 'buatqr'
+            'title' => 'Trash',
+            'currentPage' => $currentPage
         ];
-        return view('admin/buatqr', $data);
+        $datasiswa = $this->siswaModel->select('data_siswa.id, ISN, data_siswa.nama, data_siswa.jenis_kelamin, kelas.id_kelas, kelas, wali_kelas')->join('kelas', 'kelas.id_kelas = data_siswa.id_kelas', 'left')->onlyDeleted();
+
+        $data['data_siswa'] = $datasiswa->paginate(5, 'data_siswa');
+        $data['pager'] = $this->siswaModel->pager;
+        return view('admin/trash_siswa', $data);
+    }
+    public function restore_siswa($id)
+    {
+        $del = $this->siswaModel->onlyDeleted()->find($id);
+        if ($del['deleted_at']) {
+            $data = [
+                'deleted_at' => null
+            ];
+            $this->siswaModel->update($id, $data);
+            session()->setFlashdata('pesan', 'Data berhasil direstore');
+            return redirect()->to('/admin/trash_siswa');
+        }
+    }
+    public function delete2_siswa($id)
+    {
+        $del = $this->siswaModel->onlyDeleted()->find($id);
+        if ($del['deleted_at'] != null) {
+            $this->siswaModel->purgeDeleted();
+            session()->setFlashdata('pesan', 'Data berhasil dihapus');
+            return redirect()->to('/admin/trash_siswa');
+        }
+    }
+    // Manage presensi
+    public function buatqr($id)
+    {
+        $NI = $this->akunModel->select('NIP')->find($id);
+        $IS = $this->akunModel->select('ISN')->find($id);
+        // $inden = implode(',', array_column($NI, 'NIP'));
+        if ($NI['NIP'] != null) {
+            $url = "https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={$NI['NIP']}";
+            if ($url != null) {
+                $data = [
+                    'title' => 'buatqr',
+                    'url' => $url,
+                    'validation' => \Config\Services::validation(),
+                    'dat_kelas' => $this->kelasModel->findAll(),
+                ];
+                return view('admin/buatqr', $data);
+            }
+        } else {
+            $url = "https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={$IS['ISN']}";
+            if ($url != null) {
+                $data = [
+                    'title' => 'buatqr',
+                    'url' => $url,
+                    'validation' => \Config\Services::validation(),
+                    'dat_kelas' => $this->kelasModel->findAll(),
+                ];
+                return view('admin/buatqr', $data);
+            }
+        }
+    }
+    public function riwayat($id)
+    {
+        $currentPage = $this->request->getVar('page_riwayat') ? $this->request->getVar('page_riwayat') : 1;
+
+        $data = [
+            'title' => 'Riwayat',
+            'currentPage' => $currentPage
+        ];
+        $riwayat = $this->akunModel->select('users.ISN,data_siswa.nama, tanggal,waktu_datang,keterangan')->join('data_siswa', 'data_siswa.ISN = users.ISN')->join('presensi_siswa', 'data_siswa.ISN = presensi_siswa.ISN')->where('users.id', $id);
+        $data['riwayat'] = $riwayat->paginate(5, 'riwayat');
+        $data['pager'] = $this->akunModel->pager;
+        return view('admin/riwayat', $data);
+    }
+    public function scanqr()
+    {
+        $data = [
+            'title' => 'scan siswa'
+        ];
+        $resultsiswa = $this->kelasModel->select('presensi_siswa.ISN,nama,jenis_kelamin,kelas,tanggal,waktu_datang,keterangan')->join('data_siswa', 'kelas.id_kelas = data_siswa.id_kelas')->join('presensi_siswa', 'data_siswa.ISN = presensi_siswa.ISN');
+        $data['resultsiswa'] = $resultsiswa->paginate(5, 'resultsiswa');
+        $data['pager'] = $this->kelasModel->pager;
+        return view('admin/scanqr', $data);
+    }
+    public function savescan()
+    {
+        if (date("H:i:s") >= "07.00.00") {
+            $this->psModel->save([
+                'ISN' => $this->request->getVar('ISN'),
+                'keterangan' => "Terlambat"
+            ]);
+            session()->setFlashdata('pesan', 'Presensi Berhasil');
+            return redirect()->to('/admin/scanqr');
+        }
+
+        $this->psModel->save([
+            'ISN' => $this->request->getVar('ISN'),
+        ]);
+        session()->setFlashdata('pesan', 'Presensi Berhasil');
+        return redirect()->to('/admin/scanqr');
+    }
+    public function scanstaff()
+    {
+        $data = [
+            'title' => 'scan staff'
+        ];
+        return view('admin/scanstaff', $data);
+    }
+    public function savescanstaff()
+    {
+        if (date("H:i:s") >= "07.00.00") {
+            $this->psModel->save([
+                'NIP' => $this->request->getVar('NIP'),
+                'keterangan' => "Terlambat"
+            ]);
+            session()->setFlashdata('pesan', 'Presensi Berhasil');
+            return redirect()->to('/admin/scanqr');
+        }
+
+        $this->pgModel->save([
+            'NIP' => $this->request->getVar('NIP'),
+        ]);
+        session()->setFlashdata('pesan', 'Presensi Berhasil');
+        return redirect()->to('/admin/scanstaff');
+    }
+    public function resultsiswa()
+    {
+        $currentPage = $this->request->getVar('page_result_siswa') ? $this->request->getVar('page_result_siswa') : 1;
+        $keyword = $this->request->getVar('keyword');
+        // if ($keyword) {
+        //     $data_staff = $this->siswaModel->search($keyword);
+        // } else {
+        //     $data_staff = $this->siswaModel;
+        // }
+        $data = [
+            'title' => 'resultsiswa',
+            'currentPage' => $currentPage
+        ];
+        $resultsiswa = $this->kelasModel->select('presensi_siswa.ISN,nama,jenis_kelamin,kelas,tanggal,waktu_datang,keterangan')->join('data_siswa', 'kelas.id_kelas = data_siswa.id_kelas')->join('presensi_siswa', 'data_siswa.ISN = presensi_siswa.ISN');
+        $data['resultsiswa'] = $resultsiswa->paginate(5, 'resultsiswa');
+        $data['pager'] = $this->kelasModel->pager;
+
+        return view('admin/result_siswa', $data);
+    }
+    public function resultstaff()
+    {
+        $currentPage = $this->request->getVar('page_result_staff') ? $this->request->getVar('page_result_staff') : 1;
+        $keyword = $this->request->getVar('keyword');
+        // if ($keyword) {
+        //     $data_staff = $this->siswaModel->search($keyword);
+        // } else {
+        //     $data_staff = $this->siswaModel;
+        // }
+        $data = [
+            'title' => 'resultstaff',
+            'currentPage' => $currentPage
+        ];
+        $resultstaff = $this->posisiModel->select('presensi_staff.NIP,data_staff.nama,posisi.posisi,tanggal,waktu_datang')->join('histori', 'posisi.id_posisi = histori.id_posisi')->join('data_staff', 'data_staff.NIP = histori.NIP')->join('presensi_staff', 'data_staff.NIP = presensi_staff.NIP');
+        $data['resultstaff'] = $resultstaff->paginate(5, 'resultstaff');
+        $data['pager'] = $this->posisiModel->pager;
+
+        return view('admin/result_staff', $data);
+    }
+    public function export()
+    {
+        $currentPage = $this->request->getVar('page_result_staff') ? $this->request->getVar('page_result_staff') : 1;
+        $keyword = $this->request->getVar('keyword');
+        // if ($keyword) {
+        //     $data_staff = $this->siswaModel->search($keyword);
+        // } else {
+        //     $data_staff = $this->siswaModel;
+        // }
+        $data = [
+            'title' => 'Export Staff',
+            'currentPage' => $currentPage
+        ];
+        $resultstaff = $this->posisiModel->select('presensi_staff.NIP,data_staff.nama,posisi.posisi,tanggal,waktu_datang')->join('histori', 'posisi.id_posisi = histori.id_posisi')->join('data_staff', 'data_staff.NIP = histori.NIP')->join('presensi_staff', 'data_staff.NIP = presensi_staff.NIP');
+        $data['resultstaff'] = $resultstaff->paginate(5, 'resultstaff');
+        $data['pager'] = $this->posisiModel->pager;
+
+        return view('admin/export', $data);
+    }
+    public function exportsiswa()
+    {
+        $currentPage = $this->request->getVar('page_result_siswa') ? $this->request->getVar('page_result_siswa') : 1;
+        $keyword = $this->request->getVar('keyword');
+        // if ($keyword) {
+        //     $data_staff = $this->siswaModel->search($keyword);
+        // } else {
+        //     $data_staff = $this->siswaModel;
+        // }
+        $data = [
+            'title' => 'resultsiswa',
+            'currentPage' => $currentPage
+        ];
+        $resultsiswa = $this->kelasModel->select('presensi_siswa.ISN,nama,jenis_kelamin,kelas,tanggal,waktu_datang,keterangan')->join('data_siswa', 'kelas.id_kelas = data_siswa.id_kelas')->join('presensi_siswa', 'data_siswa.ISN = presensi_siswa.ISN');
+        $data['resultsiswa'] = $resultsiswa->paginate(5, 'resultsiswa');
+        $data['pager'] = $this->kelasModel->pager;
+
+        return view('admin/exportsiswa', $data);
+    }
+    public function pres_sis()
+    {
+        $data = [
+            'title' => 'pres_sis',
+            'validation' => \Config\Services::validation()
+
+        ];
+        return view('admin/pres_sis', $data);
+    }
+    public function save_sis()
+    {
+        $this->psModel->save([
+            'ISN' => $this->request->getVar('ISN'),
+            'keterangan' => $this->request->getVar('keterangan'),
+
+        ]);
+
+        session()->setFlashdata('pesan', 'Data berhasil ditambahkan');
+        return redirect()->to('/admin/resultsiswa');
+    }
+    public function pres_staff()
+    {
+        $data = [
+            'title' => 'pres_staff',
+            'validation' => \Config\Services::validation()
+
+        ];
+        return view('admin/pres_staff', $data);
+    }
+    public function save_staff()
+    {
+        $this->psModel->save([
+            'NIP' => $this->request->getVar('NIP'),
+            'keterangan' => $this->request->getVar('keterangan'),
+
+        ]);
+
+        session()->setFlashdata('pesan', 'Data berhasil ditambahkan');
+        return redirect()->to('/admin/resultstaff');
     }
 }
