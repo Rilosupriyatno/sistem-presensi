@@ -78,7 +78,7 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="<?= base_url('user/index/' . user_id()); ?>">
+        <a class="nav-link collapsed tutup" href="<?= base_url('user/index/' . user_id()); ?>">
             <i class="fas fa-fw fa-user"></i>
             <span>My Profile</span>
             <!-- <i class="fa fa-user" aria-hidden="true"></i> -->
@@ -90,14 +90,22 @@
             <span>QrCode</span>
         </a>
     </li>
-    <?php if (in_groups('user') & !in_groups('admin')) : ?>
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="<?= base_url('admin/riwayat/' . user_id()); ?>">
-                <i class="fas fa-fw fa-book" aria-hidden="true"></i>
-                <span>Lihat Riwayat</span>
-            </a>
-        </li>
-    <?php endif; ?>
+    <?php /*if (in_groups('user') & !in_groups('admin')) :*/ ?>
+    <!--<li class="nav-item">-->
+    <!--    <a class="nav-link collapsed" href="<?= base_url('admin/riwayat/' . user_id()); ?>">-->
+    <!--        <i class="fas fa-fw fa-book" aria-hidden="true"></i>-->
+    <!--        <span>Lihat Riwayat</span>-->
+    <!--    </a>-->
+    <!--</li>-->
+    <?php #endif; 
+    ?>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="<?= base_url('admin/riwayat/' . user_id()); ?>">
+            <i class="fas fa-fw fa-book" aria-hidden="true"></i>
+            <span>Lihat Riwayat</span>
+        </a>
+    </li>
+
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="<?= base_url('user/edit/' . user_id()); ?>">

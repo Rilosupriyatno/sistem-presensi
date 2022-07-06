@@ -12,13 +12,12 @@
                         <input type="text" class="form-control" id="NI" name="NI" placeholder="Nomor Identitas" autofocus>
                     </div>
                 </div> -->
-                <?php if (!empty($url)) : ?>
-                    <div class="container" style="margin-right:100%;">
-                        <div class="mb-3">
-                            <img src="<?= $url; ?>" alt="QrCode" width="50%" height="50%" class="qrcode">
-                        </div>
-                    </div>
-                <?php endif; ?>
+
+                <div class="container">
+                    <img class="img-responsive" src="<?= $url; ?>" alt="Chania" width="200" height="200">
+                </div>
+                <!--<img src="" alt="QrCode" height="40%" width="40%"  class="img-fluid img-thumbnail">-->
+
             </form>
         </div>
     </div>

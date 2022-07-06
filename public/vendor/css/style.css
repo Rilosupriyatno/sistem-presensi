@@ -1,3 +1,6 @@
+@-ms-viewport {
+  width: device-width;
+}
 .foto {
   width: 50px;
 }
@@ -7,10 +10,12 @@
 .foto-detail {
   width: 150px;
   height: 250px;
-  /* padding-right: 10px; */
+  float: right;
+  padding-right: 10px;
   padding-top: 10px;
 }
-@media (max-width: 600px) {
+
+@media (max-width: 768px) {
   .tutup {
     display: none;
   }

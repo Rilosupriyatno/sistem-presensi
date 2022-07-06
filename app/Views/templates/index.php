@@ -11,6 +11,7 @@
 
     <title><?= $title; ?></title>
 
+
     <!-- Custom fonts for this template-->
     <link href="<?= base_url(); ?>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -22,12 +23,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@duetds/date-picker@1.4.0/dist/duet/themes/default.css" />
 
     <!-- Custom styles for this template-->
-    <link href="<?= base_url(); ?>/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="<?= base_url(); ?>/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?= base_url(); ?>/vendor/css/sb-admin-2.min.css" type="text/css">
+    <link rel="stylesheet" href="<?= base_url(); ?>/vendor/css/style.css" type="text/css">
 
 </head>
 
-<body id="page-top" onload="setInterval('displayTime()', 1000);">
+<body id="page-top">
+    <!--<body id="page-top" onload="setInterval('displayTime()', 1000);">-->
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -110,7 +112,7 @@
     <script src="<?= base_url(); ?>/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="<?= base_url(); ?>/js/sb-admin-2.min.js"></script>
+    <script src="<?= base_url(); ?>/vendor/js/sb-admin-2.min.js"></script>
     <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 
     <script>
@@ -130,15 +132,15 @@
             }
         }
 
-        function displayTime() {
-            var clientTime = new Date();
-            var time = new Date(clientTime.getTime());
-            var sh = time.getHours().toString();
-            var sm = time.getMinutes().toString();
-            var ss = time.getSeconds().toString();
-            document.getElementById("jam").innerHTML = (sh.length == 1 ? "0" + sh : sh) + ":" + (sm.length == 1 ? "0" + sm : sm) + ":" + (ss.length == 1 ? "0" + ss : ss);
-            document.getElementById("jaminput").value = (sh.length == 1 ? "0" + sh : sh) + ":" + (sm.length == 1 ? "0" + sm : sm) + ":" + (ss.length == 1 ? "0" + ss : ss);
-        }
+        // function displayTime() {
+        //     var clientTime = new Date();
+        //     var time = new Date(clientTime.getTime());
+        //     var sh = time.getHours().toString();
+        //     var sm = time.getMinutes().toString();
+        //     var ss = time.getSeconds().toString();
+        //     document.getElementById("jam").innerHTML = (sh.length == 1 ? "0" + sh : sh) + ":" + (sm.length == 1 ? "0" + sm : sm) + ":" + (ss.length == 1 ? "0" + ss : ss);
+        //     document.getElementById("jaminput").value = (sh.length == 1 ? "0" + sh : sh) + ":" + (sm.length == 1 ? "0" + sm : sm) + ":" + (ss.length == 1 ? "0" + ss : ss);
+        // }
 
         function prevFile() {
             const SK = document.querySelector('#SK');

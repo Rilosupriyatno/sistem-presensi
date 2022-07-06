@@ -5,7 +5,7 @@
         <div class="col-8  p-3 shadow-lg">
             <div class="card text-center">
                 <div class="card-header">
-                    Scan QrCode 2
+                    Scan QrCode
                 </div>
                 <?php if (session()->getFlashdata('pesan')) : ?>
                     <div class="alert alert-success" role="alert">
