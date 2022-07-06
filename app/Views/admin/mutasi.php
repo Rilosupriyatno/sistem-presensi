@@ -3,41 +3,41 @@
 <div class="container">
     <div class="row">
         <div class="col-8">
-            <h2 class="my-3">Mutasi Jabatan</h2>
-            <form action="/Admin/mutate/<?= $jabat['id']; ?>" method="POST" enctype="multipart/form-data">
+            <h2 class="my-3">Posisi</h2>
+            <form action="/Admin/mutate/<?= $stat['id']; ?>" method="POST" enctype="multipart/form-data">
                 <?= csrf_field(); ?>
                 <div class="row mb-3">
-                    <label for="NIK" class="col-sm-2 col-form-label">NIK</label>
+                    <label for="NIP" class="col-sm-2 col-form-label">NIP</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control <?= ($validation->hasError('NIK')) ? 'is-invalid' : ''; ?>" id="NIK" name="NIK" autofocus value="<?= (old('NIK')) ? old('NIK') : $jabat['NIK']; ?>">
+                        <input type="text" class="form-control <?= ($validation->hasError('NIP')) ? 'is-invalid' : ''; ?>" id="NIP" name="NIP" autofocus value="<?= (old('NIP')) ? old('NIP') : $stat['NIP']; ?>">
                         <div class="invalid-feedback">
-                            <?= $validation->getError('NIK'); ?>
+                            <?= $validation->getError('NIP'); ?>
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="id_jabatan" class="col-sm-2 col-form-label">Jabatan</label>
+                    <label for="id_posisi" class="col-sm-2 col-form-label">Posisi</label>
                     <div class="col-sm-10">
-                        <select class="form-select form-control <?= ($validation->hasError('id_jabatan')) ? 'is-invalid' : ''; ?>" aria-label="Default select example" id="id_jabatan" name="id_jabatan" autofocus value="<?= old('id_jabatan'); ?>">
-                            <option selected>Pilih Jabatan</option>
-                            <?php foreach ($jabatan as $jb) : ?>
-                                <option value="<?= $jb['id_jabatan']; ?>"><?= $jb['jabatan']; ?></option>
+                        <select class="form-select form-control <?= ($validation->hasError('id_posisi')) ? 'is-invalid' : ''; ?>" aria-label="Default select example" id="id_posisi" name="id_posisi" autofocus value="<?= old('id_posisi'); ?>">
+                            <option selected>Pilih posisi</option>
+                            <?php foreach ($posisi as $jb) : ?>
+                                <option value="<?= $jb['id_posisi']; ?>"><?= $jb['posisi']; ?></option>
                             <?php endforeach;  ?>
                         </select>
                         <div class="invalid-feedback">
-                            <?= $validation->getError('id_jabatan'); ?>
+                            <?= $validation->getError('id_posisi'); ?>
                         </div>
                     </div>
                 </div>
-                <div class="row mb-3">
+                <!-- <div class="row mb-3">
                     <label for="no_sk" class="col-sm-2 col-form-label">NO.SK</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control <?= ($validation->hasError('no_sk')) ? 'is-invalid' : ''; ?>" id="no_sk" name="no_sk" autofocus value="<?= old('no_sk'); ?>">
+                        <input type="text" class="form-control <'?= ($validation->hasError('no_sk')) ? 'is-invalid' : ''; ?>" id="no_sk" name="no_sk" autofocus value="<'?= old('no_sk'); ?>">
                         <div class="invalid-feedback">
-                            <?= $validation->getError('no_sk'); ?>
+                            <'?= $validation->getError('no_sk'); ?>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="row mb-3">
                     <label for="tgl_mulai" class="col-sm-2 col-form-label">Tanggal Mulai</label>
                     <div class="col-sm-10">
@@ -56,20 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <label for="SK" class="col-sm-2 col-form-label">SK</label>
-                    <div class="col-sm-8">
-                        <div class="mb-3">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input <?= ($validation->hasError('SK')) ? 'is-invalid' : ''; ?>" id="SK" name="SK" onchange="prevFile()">
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('SK'); ?>
-                                </div>
-                                <label class="custom-file-label" for="SK">Pilih File</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
                 <button type="submit" class="btn btn-primary">Tambah Data</button>
             </form>
         </div>
