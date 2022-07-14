@@ -27,16 +27,29 @@
                 <div class="row mb-3">
                     <label for="nomor_iden" class="col-sm-2 col-form-label">Nomor Identitas</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control <?= ($validation->hasError('nomor_iden')) ? 'is-invalid' : ''; ?>" id="nomor_iden" name="nomor_iden">
-                        <div class="invalid-feedback">
-                            <?= $validation->getError('nomor_iden'); ?>
-                        </div>
+                        <?php if (isset($pegawai['NIP']) != null) : ?>
+                            <input type="text" class="form-control <?= ($validation->hasError('nomor_iden')) ? 'is-invalid' : ''; ?>" id="nomor_iden" name="nomor_iden" readonly autofocus value="<?= (old('NIP')) ? old('NIP') : $pegawai['NIP']; ?>">
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('nomor_iden'); ?>
+                            </div>
+                        <?php elseif (isset($pegawai['ISN']) != null) : ?>
+                            <input type="text" class="form-control <?= ($validation->hasError('nomor_iden')) ? 'is-invalid' : ''; ?>" id="nomor_iden" name="nomor_iden" readonly autofocus value="<?= (old('ISN')) ? old('ISN') : $pegawai['ISN']; ?>">
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('nomor_iden'); ?>
+                            </div>
+                        <?php else : ?>
+                            <input type="text" class="form-control <?= ($validation->hasError('nomor_iden')) ? 'is-invalid' : ''; ?>" id="nomor_iden" name="nomor_iden">
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('nomor_iden'); ?>
+                            </div>
+
+                        <?php endif ?>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="foto" class="col-sm-2 col-form-label">Foto</label>
                     <div class="col-sm-2">
-                        <img src="/img/default.svg" class="img-thumbnail img-preview">
+                        <img src="<?= base_url(); ?>/img/<?= $pegawai['user_image']; ?>" class="img-thumbnail img-preview">
                     </div>
                     <div class="col-sm-8">
                         <div class="mb-3">

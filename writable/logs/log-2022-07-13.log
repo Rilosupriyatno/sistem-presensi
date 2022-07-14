@@ -175,3 +175,42 @@ CRITICAL - 2022-07-13 21:12:32 --> Undefined index: NIP
 #8 C:\xampp\htdocs\sistem-presensi\public\index.php(37): CodeIgniter\CodeIgniter->run()
 #9 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
 #10 {main}
+CRITICAL - 2022-07-13 22:55:41 --> Cannot use object of type stdClass as array
+#0 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\View\View.php(214): include()
+#1 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#2 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('user/index', Array, true)
+#3 C:\xampp\htdocs\sistem-presensi\app\Controllers\User.php(32): view('user/index', Array)
+#4 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\User->index('4')
+#5 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+#6 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\sistem-presensi\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#9 {main}
+ERROR - 2022-07-13 23:06:25 --> Unknown column 'kelas' in 'field list'
+CRITICAL - 2022-07-13 23:06:25 --> Unknown column 'kelas' in 'field list'
+#0 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(280): mysqli->query('SELECT `users`....')
+#1 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Database\BaseConnection.php(663): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `users`....')
+#2 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Database\BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `users`....')
+#3 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT `users`....', Array, false)
+#4 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Model.php(720): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\sistem-presensi\app\Controllers\User.php(38): CodeIgniter\Model->__call('get', Array)
+#6 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\User->index('9')
+#7 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+#8 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\sistem-presensi\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#11 {main}
+ERROR - 2022-07-13 23:08:36 --> Column 'ISN' in field list is ambiguous
+CRITICAL - 2022-07-13 23:08:36 --> Column 'ISN' in field list is ambiguous
+#0 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(280): mysqli->query('SELECT `users`....')
+#1 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Database\BaseConnection.php(663): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `users`....')
+#2 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Database\BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `users`....')
+#3 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT `users`....', Array, false)
+#4 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Model.php(720): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\sistem-presensi\app\Controllers\User.php(40): CodeIgniter\Model->__call('get', Array)
+#6 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\User->index('9')
+#7 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\User))
+#8 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\sistem-presensi\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\sistem-presensi\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#11 {main}

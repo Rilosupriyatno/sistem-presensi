@@ -17,16 +17,33 @@ class User extends BaseController
     public function index($id)
     {
         $data['title'] = 'MyProfile';
-        $this->akunModel->select('users.id as userid, user_image, username, email, name, fullname');
-        $this->akunModel->join('auth_groups_users', 'auth_groups_users.user_id = users.id');
-        $this->akunModel->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id');
-        $this->akunModel->where('users.id', $id);
-        $query = $this->akunModel->get();
-        $data['users'] = $query->getRow();
-        if (empty($data['users'])) {
-            return redirect()->to('/user');
+        $NI = $this->akunModel->select('NIP')->find($id);
+        $IS = $this->akunModel->select('ISN')->find($id);
+        if ($NI['NIP'] != null) {
+            $this->akunModel->select('users.id as userid, NIP, user_image, username, email, name, fullname');
+            $this->akunModel->join('auth_groups_users', 'auth_groups_users.user_id = users.id');
+            $this->akunModel->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id');
+            $this->akunModel->where('users.id', $id);
+            $query = $this->akunModel->get();
+            $data['users'] = $query->getRow();
+            if (empty($data['users'])) {
+                return redirect()->to('/user');
+            }
+            return view('user/index', $data);
+        } elseif ($IS['ISN'] != null) {
+            $this->akunModel->select('users.id as userid, users.ISN, kelas, wali_kelas, user_image, username, email, name, fullname');
+            $this->akunModel->join('data_siswa', 'data_siswa.ISN = users.ISN');
+            $this->akunModel->join('kelas', 'kelas.id_kelas = data_siswa.id_kelas');
+            $this->akunModel->join('auth_groups_users', 'auth_groups_users.user_id = users.id');
+            $this->akunModel->join('auth_groups', 'auth_groups.id = auth_groups_users.group_id');
+            $this->akunModel->where('users.id', $id);
+            $query = $this->akunModel->get();
+            $data['users'] = $query->getRow();
+            if (empty($data['users'])) {
+                return redirect()->to('/user');
+            }
+            return view('user/index', $data);
         }
-        return view('user/index', $data);
     }
     public function page()
     {

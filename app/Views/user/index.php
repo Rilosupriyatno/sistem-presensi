@@ -19,14 +19,27 @@
                                 <li class="list-group-item">
                                     <h4><?= $users->username; ?></h4>
                                 </li>
-                                <?php if (user()->fullname) : ?>
+                                <?php if (isset($users->NIP) != null) : ?>
+                                    <li class="list-group-item">
+                                        <?= $users->NIP ?>
+                                        <?php if (user()->fullname) : ?>
                                     <li class="list-group-item"><?= $users->fullname; ?></li>
                                 <?php endif; ?>
                                 <li class="list-group-item"><?= $users->email; ?></li>
-                                <li class="list-group-item"><?= $users->name; ?></li>
-                                <li class="list-group-item">
-                                    <span class="badge badge-<?= ($users->name == 'admin') ? 'success' : 'warning'; ?>"><?= $users->name; ?></span>
+                                <li class="list-group-item"><span class="badge badge-<?= ($users->name == 'admin') ? 'success' : 'warning'; ?>"><?= $users->name; ?></span>
                                 </li>
+                            <?php else : ?>
+                                <li class="list-group-item">
+                                    <?= $users->ISN ?>
+                                    <?php if (user()->fullname) : ?>
+                                <li class="list-group-item"><?= $users->fullname; ?></li>
+                            <?php endif; ?>
+                            <li class="list-group-item"><?= $users->email; ?></li>
+                            <li class="list-group-item"><?= $users->kelas; ?></li>
+                            <li class="list-group-item"><?= $users->wali_kelas; ?></li>
+                            <li class="list-group-item"><span class="badge badge-<?= ($users->name == 'admin') ? 'success' : 'warning'; ?>"><?= $users->name; ?></span>
+                            </li>
+                        <?php endif ?>
                             </ul>
                         </div>
                     </div>
