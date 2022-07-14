@@ -42,7 +42,6 @@
                             <div class="invalid-feedback">
                                 <?= $validation->getError('nomor_iden'); ?>
                             </div>
-
                         <?php endif ?>
                     </div>
                 </div>

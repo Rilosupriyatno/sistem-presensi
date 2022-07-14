@@ -43,6 +43,7 @@
                     <a class="collapse-item" href="<?= base_url('admin/daftar_staff'); ?>">Daftar Staff</a>
                     <a class="collapse-item" href="<?= base_url('admin/daftar_siswa'); ?>">Daftar Siswa</a>
                     <a class="collapse-item" href="<?= base_url('admin/mutasi_pegawai'); ?>">Posisi</a>
+                    <a class="collapse-item" href="<?= base_url('admin/kelas'); ?>">Kelas</a>
                     <a class="collapse-item" href="<?= base_url('admin/daftar_akun'); ?>">Daftar Akun</a>
                     <a class="collapse-item" href="<?= base_url('admin/histori_akun'); ?>">Histori Akun</a>
                 </div>
