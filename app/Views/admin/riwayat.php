@@ -13,7 +13,11 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>ISN</th>
+                            <?php if (isset($riwayat['NIP']) != null) : ?>
+                                <th>NIP</th>
+                            <?php else : ?>
+                                <th>ISN</th>
+                            <?php endif; ?>
                             <th>Nama</th>
                             <th>Tanggal</th>
                             <th>Waktu Datang</th>
@@ -36,7 +40,11 @@
                         <?php foreach ($riwayat as $staff) : ?>
                             <tr>
                                 <td><?= $i++; ?></td>
-                                <td><?= $staff['ISN']; ?></td>
+                                <?php if (isset($staff['NIP']) != null) : ?>
+                                    <td><?= $staff['NIP']; ?></td>
+                                <?php else : ?>
+                                    <td><?= $staff['ISN']; ?></td>
+                                <?php endif; ?>
                                 <td><?= $staff['nama']; ?></td>
                                 <td><?= $staff['tanggal']; ?></td>
                                 <td><?= $staff['waktu_datang']; ?></td>

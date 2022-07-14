@@ -592,10 +592,19 @@ class Admin extends BaseController
             'title' => 'Riwayat',
             'currentPage' => $currentPage
         ];
-        $riwayat = $this->akunModel->select('users.ISN,data_siswa.nama, tanggal,waktu_datang,keterangan')->join('data_siswa', 'data_siswa.ISN = users.ISN')->join('presensi_siswa', 'data_siswa.ISN = presensi_siswa.ISN')->where('users.id', $id);
-        $data['riwayat'] = $riwayat->paginate(5, 'riwayat');
-        $data['pager'] = $this->akunModel->pager;
-        return view('admin/riwayat', $data);
+        $NI = $this->akunModel->select('NIP')->find($id);
+        $IS = $this->akunModel->select('ISN')->find($id);
+        if ($NI['NIP'] != null) {
+            $riwayat = $this->akunModel->select('users.NIP,data_staff.nama, presensi_staff.tanggal,presensi_staff.waktu_datang,presensi_staff.keterangan')->join('data_staff', 'data_staff.NIP = users.NIP')->join('presensi_staff', 'data_staff.NIP = presensi_staff.NIP')->where('users.id', $id);
+            $data['riwayat'] = $riwayat->paginate(5, 'riwayat');
+            $data['pager'] = $this->akunModel->pager;
+            return view('admin/riwayat', $data);
+        } elseif ($IS['ISN'] != null) {
+            $riwayat = $this->akunModel->select('users.ISN,data_siswa.nama, presensi_siswa.tanggal,presensi_siswa.waktu_datang,presensi_siswa.keterangan')->join('data_siswa', 'data_siswa.ISN = users.ISN')->join('presensi_siswa', 'data_siswa.ISN = presensi_siswa.ISN')->where('users.id', $id);
+            $data['riwayat'] = $riwayat->paginate(5, 'riwayat');
+            $data['pager'] = $this->akunModel->pager;
+            return view('admin/riwayat', $data);
+        }
     }
     public function scanqr()
     {
